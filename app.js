@@ -136,11 +136,14 @@ app.get('/account/unlink/:provider', passportConf.isAuthenticated, userControlle
 app.get('/about', aboutController.index);
 
 
+app.get('/stats', userController.getStats);
+app.get('/game/monster/month', gameController.getMonstersForThisMonth);
+app.post('/game/summary/new', passportConf.isAuthenticated, gameController.postDaySummary);
+
 /**
  * Game related routes.
  */
 app.get('/game/expense', passportConf.isAuthenticated, gameController.postExpense);
-
 
 
 /**
