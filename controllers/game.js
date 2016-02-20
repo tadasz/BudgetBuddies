@@ -14,8 +14,6 @@ var Monster = require('../models/Monster');
  * User input for expense
  */
 exports.postExpense = function(req, res) {
-    
-    
   if (req.isAuthenticated()) {
      //Store expense in user database
       User.findById(req.user.id, function(err, user) {
@@ -36,8 +34,14 @@ exports.postExpense = function(req, res) {
             title: 'Account Management'
           });*/
         
-        //user.game.expenses = []; // cleaning testing, has to be removed!!!
-        user.game.expenses.push({ timestamp:req.query.date , value:req.query.value });
+        
+        
+        
+        
+        
+        var date = new Date();
+        var nowDate = String(date.toUTCString());
+        user.game.expenses.push({ timestamp: nowDate, value: req.body.expense });
         
         user.save(function(err) {
           if (err) {
@@ -58,27 +62,21 @@ exports.getMonstersForThisMonth = function(req, res) {
     //get data from db, filter only for one month
     var today = new Date();
     
-    
-    var allDaysInMonth = getDaysInMonth(parseInt(moment().format("MM")) - 1,parseInt(moment().format("YYYY")));
-    console.log("**********");
-    console.log(allDaysInMonth);
+    //TODO: probably should filter only from today till the end of the month
+    var allDaysInMonth = getDaysInMonth(parseInt(moment().format("MM")) - 1, parseInt(moment().format("YYYY")));
     
     var monsters = Monster.find({
         date: {
             $gte: allDaysInMonth[allDaysInMonth.length - 1],
             $lt: allDaysInMonth[0]
          
-        }
-    // appearance_id: 1
-        }, function (err, docs) {
+        }}, function (err, docs) {
             if (err) {
                 console.log(err.toString());
             }
             
-            console.log("docs: " + docs);
-            
             var allMonsters = [];
-            if (docs.length < 20) {
+            if (docs.length < 26) {
                 console.log("didnt found em, creating :(");
                 allMonsters = createNewMonsters(allDaysInMonth);
             } else {
@@ -119,8 +117,9 @@ function createNewMonsters(allDaysInMonth) {
 }
 
 exports.postDaySummary = function(req, res) {
-if (req.isAuthenticated()) {
-     //Store moster in user database
+    console.log("postDaySummary was called");
+// if (req.isAuthenticated()) {
+     
       User.findById(req.user.id, function(err, user) {
         if (err) {
           return next(err);
@@ -128,9 +127,9 @@ if (req.isAuthenticated()) {
         
         var date = req.body.date;
         
-        user.game.dailySummaries.push({ "date": req.body.date, "balance": req.body.balance });
+        user.game.dailySummaries.push({ "date": date, "balance": req.body.balance });
         //TODO: kill monster if nessesarry
-        killMonster(new Date());
+        killMonster(req.body.balance > 0 ? true : false, new Date());
         user.save(function(err) {
           if (err) {
             return next(err);
@@ -139,14 +138,13 @@ if (req.isAuthenticated()) {
           res.redirect('/');
         });
     });
-      
-  }
-
+//   }
 };
 
-function killMonster(date) {
-    var today = moment(date).startOf('day')
-    var tomorrow = moment(today).add(1, 'days')
+function killMonster(monsterDie, date) {
+    console.log("killing me softly...");
+    var today = moment(date).startOf('day');
+    var tomorrow = moment(today).add(1, 'days');
     
     Monster.find({
       date: {
@@ -155,6 +153,9 @@ function killMonster(date) {
       }
         
     }, function (err, docs) {
+        if (err) {
+            console.log(err.toString());
+        }
         console.log(docs);
     });
     
@@ -162,10 +163,9 @@ function killMonster(date) {
 
 
 function getDaysInMonth(month, year) {
-    console.log("month: " + month + ", year: " + year);
-     var date = new Date(year, month, 1);
-     var days = [];
-     while (date.getMonth() === month) {
+    var date = new Date(year, month, 1);
+    var days = [];
+    while (date.getMonth() === month) {
         days.push(new Date(date));
         date.setDate(date.getDate() + 1);
      }

@@ -2,7 +2,7 @@ extends layout
 
 block content
   h1 #{date_title}
-    input.finish_day_button(type="button", value="Finish day")
+    input.finish_day_button(type="button", value="Finish day", onclick="reportEndOfDay()")
 
 
   //- p.lead A boilerplate for Node.js web applications.
@@ -19,7 +19,12 @@ block content
 block scripts
   //- script(src='/js/lib/jquery.inputmask.bundle.min.js')
 
-
+  script.
+    function reportEndOfDay() {
+        console.log("something")
+        $.get( "/game/summary/new", {date:Date.now(), balance: 20 });
+    }
+  
   script.
     $(document).ready(function(){
       $("#expense_input").keypress(function(e) {
