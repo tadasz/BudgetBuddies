@@ -127,6 +127,28 @@ exports.getAccount = function(req, res) {
  * POST /account/profile
  * Update profile information.
  */
+exports.postUpdateGameSettings = function(req, res, next) {
+  User.findById(req.user.id, function(err, user) {
+    if (err) {
+      return next(err);
+    }
+    user.game.salery = req.body.salery || '';
+    user.game.goal = req.body.goal || '';
+    user.save(function(err) {
+      if (err) {
+        return next(err);
+      }
+      req.flash('success', { msg: 'Game settings updated.' });
+      res.redirect('/account');
+    });
+  });
+};
+
+
+/**
+ * POST /account/profile
+ * Update profile information.
+ */
 exports.postUpdateProfile = function(req, res, next) {
   User.findById(req.user.id, function(err, user) {
     if (err) {

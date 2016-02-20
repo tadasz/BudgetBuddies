@@ -2,6 +2,26 @@ extends ../layout
 
 block content
   .page-header
+  h3 Game Settings
+
+  form.form-horizontal(action='/account/game/settings', method='POST')
+    input(type='hidden', name='_csrf', value=_csrf)
+    .form-group
+      label.col-sm-3.control-label(for='salery') Salery
+      .col-sm-7
+        input.form-control(type='salery', name='salery', id='salery', value='#{user.game.salery}')
+    .form-group
+      label.col-sm-3.control-label(for='goal') Goal
+      .col-sm-7
+        input.form-control(type='text', name='goal', id='goal', value='#{user.game.goal}')
+    .form-group
+      .col-sm-offset-3.col-sm-4
+        button.btn.btn.btn-primary(type='submit')
+          i.fa.fa-pencil
+          | Update Game Settings
+
+
+  .page-header
     h3 Profile Information
 
   form.form-horizontal(action='/account/profile', method='POST')
@@ -73,6 +93,7 @@ block content
           | Delete my account
 
   .page-header
+  
     h3 Linked Accounts
   .form-horizontal
     .form-group

@@ -23,6 +23,11 @@ var userSchema = new mongoose.Schema({
     picture: { type: String, default: '' }
   },
 
+  game: {
+    salery: { type: Number, default: 850 },
+    goal: { type: Number, default: 300 }
+  },
+
   resetPasswordToken: String,
   resetPasswordExpires: Date
 });
