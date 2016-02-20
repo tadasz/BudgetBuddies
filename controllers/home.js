@@ -4,7 +4,7 @@
  */
 exports.index = function(req, res) {
   res.render('home', {
-    title: 'Budget Buddy',
+    title: 'Inspector Budget',
     date_title: 'February 20th, 2016'
   });
 };

@@ -2,20 +2,25 @@ extends layout
 
 block content
   h1 #{date_title}
+    input.finish_day_button(type="button", value="Finish day")
+
+
   //- p.lead A boilerplate for Node.js web applications.
   .jumbotron
     .game_container
       p
         | Here will be the game
-  hr
+  //- hr
   .container
     // Example row of columns
     .row
-      script(src='/js/lib/activate-power-mode.js')
-      script.
-        POWERMODE.colorful = true;
-        document.body.addEventListener('input', POWERMODE);
-
-      .input_container
-        input.main_input(type="text", id="expense_input")
+      .attack_container
+        p
+          | 👊ATTACK by logging your expense below:
+        script(src='/js/lib/activate-power-mode.js')
+        script.
+          POWERMODE.colorful = true;
+          document.body.addEventListener('input', POWERMODE);
+        .input_container
+          input.main_input(type="text", id="expense_input")
 

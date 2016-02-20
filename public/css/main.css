@@ -8839,10 +8839,21 @@ textarea {
 .input_container {
   text-align: center; }
 
+.finish_day_button {
+  margin-left: 20px; }
+
 .main_input {
   width: 80%;
   height: 100px;
   text-align: center;
   font-size: 40pt; }
+
+.attack_container p {
+  font-size: 18pt;
+  text-align: center; }
+
+h1 {
+  margin-left: 20px !important;
+  margin-right: 20px !important; }
 
 /*# sourceMappingURL=main.css.map */
