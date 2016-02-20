@@ -14,6 +14,8 @@ var Monster = require('../models/Monster');
  * User input for expense
  */
 exports.postExpense = function(req, res) {
+    
+    
   if (req.isAuthenticated()) {
      //Store expense in user database
       User.findById(req.user.id, function(err, user) {
@@ -34,14 +36,8 @@ exports.postExpense = function(req, res) {
             title: 'Account Management'
           });*/
         
-        
-        
-        
-        
-        
-        var date = new Date();
-        var nowDate = String(date.toUTCString());
-        user.game.expenses.push({ timestamp: nowDate, value: req.body.expense });
+        //user.game.expenses = []; // cleaning testing, has to be removed!!!
+        user.game.expenses.push({ timestamp:req.query.date , value:req.query.value });
         
         user.save(function(err) {
           if (err) {

@@ -34,6 +34,7 @@ dotenv.load({ path: '.env.example' });
  * Controllers (route handlers).
  */
 var homeController = require('./controllers/home');
+var aboutController = require('./controllers/about');
 var userController = require('./controllers/user');
 var gameController = require('./controllers/game');
 var apiController = require('./controllers/api');
@@ -132,6 +133,7 @@ app.post('/account/profile', passportConf.isAuthenticated, userController.postUp
 app.post('/account/password', passportConf.isAuthenticated, userController.postUpdatePassword);
 app.post('/account/delete', passportConf.isAuthenticated, userController.postDeleteAccount);
 app.get('/account/unlink/:provider', passportConf.isAuthenticated, userController.getOauthUnlink);
+app.get('/about', aboutController.index);
 
 
 app.get('/stats', userController.getStats);
@@ -141,7 +143,7 @@ app.post('/game/summary/new', passportConf.isAuthenticated, gameController.postD
 /**
  * Game related routes.
  */
-app.post('/game/expense', passportConf.isAuthenticated, gameController.postExpense);
+app.get('/game/expense', passportConf.isAuthenticated, gameController.postExpense);
 
 
 /**
