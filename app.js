@@ -135,8 +135,8 @@ app.get('/account/unlink/:provider', passportConf.isAuthenticated, userControlle
 
 
 app.get('/stats', userController.getStats);
-app.get('/monsters_for_month', userController.getMonstersForThisMonth);
-
+app.get('/game/monster/month', gameController.getMonstersForThisMonth);
+app.post('/game/summary/new', passportConf.isAuthenticated, gameController.postDaySummary);
 
 /**
  * Game related routes.

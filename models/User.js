@@ -26,8 +26,10 @@ var userSchema = new mongoose.Schema({
   game: {
     salery: { type: Number, default: 850 },
     goal: { type: Number, default: 300 },
-    expenses: []
+    expenses: [],
+    dailySummaries: []
   },
+
 
   resetPasswordToken: String,
   resetPasswordExpires: Date

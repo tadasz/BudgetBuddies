@@ -11,7 +11,7 @@ var fs = require("fs");
  * Stats page.
  */
 exports.getStats = function(req, res) {
-    // //TODO: get current user stats
+    //TODO: get current user stats
     console.log("Request getStats  was called.");
     res.writeHead(200, {"Content-Type": "application/json"});
     var otherObject = { "user_id": 123, "monthly_saving_goal": 200, "monthly_income": 4000, "daily_expenses": 100, "weekly_expenses": 500, "monthly_expenses": 1000 };
@@ -20,21 +20,7 @@ exports.getStats = function(req, res) {
         "user_stats": otherObject
     });
     res.end(json);  
-    
 };
-
-
-exports.getMonstersForThisMonth = function(req, res) {
-    console.log("Request getMonstersForThisMonth was called.");
-    res.writeHead(200, {"Content-Type": "application/json"});
-    
-    var otherObject = [{ "appearance_id": 1, "killed": true, "date": new Date()}, {"appearance_id": 2, "killed": true, "date": new Date()} ];
-    
-    var json = JSON.stringify({ 
-        "monsters": otherObject
-    });
-    res.end(json); 
-}
 
 /**
  * GET /login
