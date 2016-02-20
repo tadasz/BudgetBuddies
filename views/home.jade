@@ -8,13 +8,13 @@ block content
   //- p.lead A boilerplate for Node.js web applications.
   .jumbotron
     .game_container
-      .game
+      .game(id="game")
   //- hr
   .container
     .row
       .attack_container
         p
-          | 👊ATTACK by logging your expense below:
+          | &#x1F44A; ATTACK by logging your expense below:
 
 block scripts
   //- script(src='/js/lib/jquery.inputmask.bundle.min.js')
@@ -29,6 +29,7 @@ block scripts
     });
   script(src='/js/lib/activate-power-mode.js')
   script(src='/js/lib/phaser.min.js')
+  script(src='/js/game/main.js')
 
   script.
     POWERMODE.colorful = true;
