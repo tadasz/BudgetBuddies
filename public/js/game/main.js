@@ -14,7 +14,7 @@ window.onresize = resize;
 
 function preload() {
     game.load.image('bg_tile', '/assets/bg_tile.png');
-    game.load.atlasJSONArray('hero', 'assets/hero.png', 'assets/hero.json');
+    game.load.atlasJSONHash('hero', 'assets/hero.png', 'assets/hero.json');
 }
 
 function create() {
@@ -32,13 +32,14 @@ function createCharacter()
 {
     var hero = game.add.sprite(300, 350, 'hero');
     hero.anchor.set(0.5, 1);
-    hero.animations.add('attack1', Phaser.ArrayUtils.numberArray(0, 29), 22, true);
-    hero.animations.add('attack2', Phaser.ArrayUtils.numberArray(30, 48), 22, true);
-    hero.animations.add('attack3', Phaser.ArrayUtils.numberArray(49, 59), 22, true);
-    hero.animations.add('idle', Phaser.ArrayUtils.numberArray(80, 179), 22, true);
+    hero.animations.add('attack1', Phaser.Animation.generateFrameNames('attack01', 0, 29, '', 4), 22, true);
+    hero.animations.add('attack2', Phaser.Animation.generateFrameNames('attack02', 0, 16, '', 4), 22, true);
+    hero.animations.add('attack3', Phaser.Animation.generateFrameNames('attack03', 0, 20, '', 4), 22, true);
+    hero.animations.add('hit',     Phaser.Animation.generateFrameNames('hit', 0, 21, '', 4),      22, true);
+    hero.animations.add('idle',    Phaser.Animation.generateFrameNames('idle', 0, 79, '', 4),     22, true);
     hero.animations.play('idle');
 
-    all_animations = ['attack1', 'attack2', 'attack3', 'idle'];
+    all_animations = ['attack1', 'attack2', 'attack3', 'hit', 'idle'];
     current_anim = 0;
     game.input.keyboard.onDownCallback = function(e) {
         // console.log(e.keyCode);
