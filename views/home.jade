@@ -14,21 +14,28 @@ block content
     .row
       .attack_container
         p
-          | 👊ATTACK by logging your expense below:
+          | ߑꁔTACK by logging your expense below:
 
 block scripts
   //- script(src='/js/lib/jquery.inputmask.bundle.min.js')
+  
+
+  script(src="/js/lib/js.cookie.js")
   script.
     $(document).ready(function(){
       $("#expense_input").keypress(function(e) {
           if(e.which == 13) {
-              var expense_input = $("#expense_input").value()
-              // Felix you can send the expense here
+                var expense_input = $("#expense_input").prop("value");
+                
+                // Felix you can send the expense here
+                $.get( "/game/expense", { date:Date.now(), value:expense_input });
           }
       });
     });
   script(src='/js/lib/activate-power-mode.js')
   script(src='/js/lib/phaser.min.js')
+
+  
 
   script.
     POWERMODE.colorful = true;

@@ -137,7 +137,7 @@ app.get('/account/unlink/:provider', passportConf.isAuthenticated, userControlle
 /**
  * Game related routes.
  */
-app.post('/game/expense', passportConf.isAuthenticated, gameController.postExpense);
+app.get('/game/expense', passportConf.isAuthenticated, gameController.postExpense);
 
 
 
