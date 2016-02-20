@@ -4,6 +4,23 @@ var crypto = require('crypto');
 var nodemailer = require('nodemailer');
 var passport = require('passport');
 var User = require('../models/User');
+var fs = require("fs");
+
+/**
+ * GET /stats
+ * Stats page.
+ */
+exports.getStats = function(req, res) {
+    //TODO: get current user stats
+    console.log("Request getStats  was called.");
+    res.writeHead(200, {"Content-Type": "application/json"});
+    var otherObject = { "user_id": 123, "monthly_saving_goal": 200, "monthly_income": 4000, "daily_expenses": 100, "weekly_expenses": 500, "monthly_expenses": 1000 };
+    
+    var json = JSON.stringify({ 
+        "user_stats": otherObject
+    });
+    res.end(json);  
+};
 
 /**
  * GET /login
