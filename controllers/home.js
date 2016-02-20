@@ -4,7 +4,7 @@
  */
 exports.index = function(req, res) {
   res.render('home', {
-    title: 'Home',
-    project_name: 'From Felix'
+    title: 'Inspector Budget',
+    date_title: 'February 20th, 2016'
   });
 };
