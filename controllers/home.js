@@ -4,6 +4,7 @@
  */
 exports.index = function(req, res) {
   res.render('home', {
-    title: 'Home'
+    title: 'Home',
+    project_name: 'From Felix'
   });
 };
