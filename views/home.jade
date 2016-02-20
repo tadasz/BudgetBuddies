@@ -2,9 +2,15 @@ extends layout
 
 block content
   h1 #{date_title}
-  p.lead A boilerplate for Node.js web applications.
+  //- p.lead A boilerplate for Node.js web applications.
+  .jumbotron
+    .game_container
+      p
+        | Here will be the game
   hr
-  .game_canvas game will be here
-  hr
-  .main_input
-      input(type="text", name="expense")
+  .container
+    // Example row of columns
+    .row
+      .input_container
+        input.main_input(type="text")
+
