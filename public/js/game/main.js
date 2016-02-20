@@ -31,7 +31,7 @@ function create() {
 function createCharacter()
 {
     var hero = game.add.sprite(300, 350, 'hero');
-    hero.anchor.set(0.5, 1);
+    hero.anchor.set(0, 1);
     hero.animations.add('attack1', Phaser.Animation.generateFrameNames('attack01', 0, 29, '', 4), 22, true);
     hero.animations.add('attack2', Phaser.Animation.generateFrameNames('attack02', 0, 16, '', 4), 22, true);
     hero.animations.add('attack3', Phaser.Animation.generateFrameNames('attack03', 0, 20, '', 4), 22, true);
