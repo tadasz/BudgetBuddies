@@ -4,6 +4,7 @@
  */
 exports.index = function(req, res) {
   res.render('home', {
-    title: 'Home'
+    title: 'Budget Buddy',
+    date_title: 'February 20th, 2016'
   });
 };
