@@ -28,13 +28,14 @@ var upload = multer({ dest: path.join(__dirname, 'uploads') });
  *
  * Default path: .env (You can remove the path argument entirely, after renaming `.env.example` to `.env`)
  */
-dotenv.load({ path: '.env' });
+dotenv.load({ path: '.env.example' });
 
 /**
  * Controllers (route handlers).
  */
 var homeController = require('./controllers/home');
 var userController = require('./controllers/user');
+var gameController = require('./controllers/game');
 var apiController = require('./controllers/api');
 var contactController = require('./controllers/contact');
 
@@ -126,16 +127,22 @@ app.get('/contact', contactController.getContact);
 app.post('/contact', contactController.postContact);
 
 app.get('/account', passportConf.isAuthenticated, userController.getAccount);
-
 app.post('/account/game/settings', passportConf.isAuthenticated, userController.postUpdateGameSettings);
-
 app.post('/account/profile', passportConf.isAuthenticated, userController.postUpdateProfile);
 app.post('/account/password', passportConf.isAuthenticated, userController.postUpdatePassword);
 app.post('/account/delete', passportConf.isAuthenticated, userController.postDeleteAccount);
 app.get('/account/unlink/:provider', passportConf.isAuthenticated, userController.getOauthUnlink);
 
+
 app.get('/stats', userController.getStats);
 app.get('/monsters_for_month', userController.getMonstersForThisMonth);
+
+
+/**
+ * Game related routes.
+ */
+app.post('/game/expense', passportConf.isAuthenticated, gameController.postExpense);
+
 
 /**
  * API examples routes.

@@ -10,15 +10,17 @@ html
   body
     include partials/header
 
-    .container
+    //- .container
       include partials/flash
-      block content
+    block content
 
     include partials/footer
 
     script(src='/js/lib/jquery-2.2.0.min.js')
     script(src='/js/lib/bootstrap.min.js')
     script(src='/js/main.js')
+
+    block scripts
 
     // Google Analytics: change UA-XXXXX-X to be your site's ID
     script.
