@@ -11,6 +11,11 @@ block content
   .container
     // Example row of columns
     .row
+      script(src='/js/lib/activate-power-mode.js')
+      script.
+        POWERMODE.colorful = true;
+        document.body.addEventListener('input', POWERMODE);
+
       .input_container
-        input.main_input(type="text")
+        input.main_input(type="text", id="expense_input")
 
