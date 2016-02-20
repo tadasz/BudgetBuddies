@@ -134,6 +134,7 @@ exports.postUpdateGameSettings = function(req, res, next) {
     }
     user.game.salery = req.body.salery || '';
     user.game.goal = req.body.goal || '';
+    user.game.daily = req.body.daily || '';
     user.save(function(err) {
       if (err) {
         return next(err);

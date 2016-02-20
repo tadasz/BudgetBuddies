@@ -13,13 +13,19 @@ block content
     .form-group
       label.col-sm-3.control-label(for='goal') Goal
       .col-sm-7
-        input.form-control(type='text', name='goal', id='goal', value='#{user.game.goal}')
+        input.form-control(type='text', name='goal', id='goal', value='#{user.game.goal}' )
+    .form-group
+      label.col-sm-3.control-label(for='goal') Daily Budget
+      .col-sm-7
+        input.form-control(type='text', name='daily', id='daily', value='#{user.game.daily}' readonly='readonly')
+        
     .form-group
       .col-sm-offset-3.col-sm-4
         button.btn.btn.btn-primary(type='submit')
           i.fa.fa-pencil
           | Update Game Settings
-
+    
+    
 
   .page-header
     h3 Profile Information
@@ -127,3 +133,35 @@ block content
           p: a.text-danger(href='/account/unlink/linkedin') Unlink your LinkedIn account
         else
           p: a(href='/auth/linkedin') Link your LinkedIn account
+
+block scripts
+    script.
+        function setDailyValue(val)
+        {
+            $("#daily").text( val );
+            $("#daily").val(val);
+        }
+        
+        function calcutlateDaily() {
+            var s = Number($("#salery").val());
+            var g = Number($("#goal").val());
+            setDailyValue(Math.round((s - g) / 30));
+        }
+        
+        $(document).ready(function() {
+            $("#salery").keyup(function(e) {
+                if ($("#salery").val().match(/^[0-9]*$/g))
+                    setTimeout(calcutlateDaily, 200);
+                else
+                    $("#salery").val(($("#salery").val().substring(0, $("#salery").val().length -1)));
+            });
+            $("#goal").keyup(function(e) {
+                console.log($("#goal").val().length);
+            
+                if ($("#goal").val().match(/^[0-9]*$/g) != null)
+                   setTimeout(calcutlateDaily, 200)
+                else
+                    $("#goal").val(($("#goal").val().substring(0, $("#goal").val().length -1)));
+            });
+            calcutlateDaily();
+        });
