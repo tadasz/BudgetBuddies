@@ -124,8 +124,8 @@ exports.getAccount = function(req, res) {
 };
 
 /**
- * POST /account/profile
- * Update profile information.
+ * POST /account/game/settings
+ * Update game settings.
  */
 exports.postUpdateGameSettings = function(req, res, next) {
   User.findById(req.user.id, function(err, user) {
