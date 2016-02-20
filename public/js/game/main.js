@@ -24,6 +24,8 @@ function create() {
 
     createBackgrounds();
     createCharacter();
+
+
 }
 
 function createCharacter()
@@ -35,6 +37,20 @@ function createCharacter()
     hero.animations.add('attack3', Phaser.ArrayUtils.numberArray(49, 59), 22, true);
     hero.animations.add('idle', Phaser.ArrayUtils.numberArray(80, 179), 22, true);
     hero.animations.play('idle');
+
+    all_animations = ['attack1', 'attack2', 'attack3', 'idle'];
+    current_anim = 0;
+    game.input.keyboard.onDownCallback = function(e) {
+        // console.log(e.keyCode);
+        if (e.keyCode == 32) {
+            current_anim++;
+            if (current_anim >= all_animations.length) {
+                current_anim = 0;
+            }
+            next_anim = all_animations[current_anim];
+            hero.animations.play(next_anim);
+        }
+    }
 }
 
 function createBackgrounds()
