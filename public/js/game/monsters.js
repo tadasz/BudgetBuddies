@@ -69,8 +69,8 @@ BB.monsterController = {
 
 		BB.game.small_buttons_after = [];
 		BB.game.small_monsters_after = [];
-		//add monsters before
-		for (var i = 0; i < 4; i++) {
+		//add monsters after
+		for (var i = 0; i < 2; i++) {
 			var small_button = BB.game.add.sprite(100, 370, 'level_buttons_small');
 			small_button.anchor.set(0.5, 1);
 			BB.game.small_buttons_after.push(small_button);

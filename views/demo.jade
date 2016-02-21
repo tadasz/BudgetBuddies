@@ -64,6 +64,32 @@ block scripts
         //- $.get( "/game/summary/new", {date:Date.now(), balance: 20 });
         finishDay();
     }
+
+    function showInspector() {
+         var titleText = "Good job!";
+         var bodyText = "You finished the day within your budget!";
+         if (BB.expensesSum > 100) {
+           titleText = "Oh no..!";
+           bodyText = "You exceeded your daily budget today. Try to keep an eye on your expenses tomorrow!"
+         }
+ 
+         
+         $("#modal_title").text(titleText); 
+         $("#modal_body").text(bodyText); 
+ 
+         $("#myModal").modal({
+                       
+           backdrop: 'static',
+           keyboard: true,
+           body: "asdasda"
+         });
+     }
+     
+    function restart() {
+       location.reload();
+    }
+
+
     //*** number validation ***
 
     function parseEnteredItem(input) {
