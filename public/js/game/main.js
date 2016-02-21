@@ -110,6 +110,7 @@ function createBackgrounds()
 }
 
 function update() {
+    BB.monsterController.update();
 }
 
 function render() {

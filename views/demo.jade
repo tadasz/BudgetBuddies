@@ -32,19 +32,19 @@ block game_content
           | 3 minutes ago
         | Lunch - burgers
         span.cost
-          | €15.00
+          | $15.00
       li.list-group-item
         span.date
           | 4 minutes ago
         | dönner kebap
         span.cost
-          | €3.00
+          | $3.00
       li.list-group-item
         span.date
           | 5 minutes ago
         | club mate
         span.cost
-          | €2.00
+          | $2.00
 
 block scripts
   //- script(src='/js/lib/jquery.inputmask.bundle.min.js')
@@ -58,7 +58,7 @@ block scripts
     //*** number validation ***
 
     function parseEnteredItem(input) {
-        var withoutCurrency = input.replace("$", " ").replace("€", " ").replace("£", " ");
+        var withoutCurrency = input.replace("$", " ").replace("$", " ").replace("£", " ");
         console.log(withoutCurrency);
         var price = getItemPrice(withoutCurrency)
         console.log("price: " + price)
