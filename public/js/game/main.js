@@ -15,11 +15,10 @@ window.onresize = resize;
 
 function preload() {
     BB.game.load.image('bg_tile', '/assets/bg_tile.png');
-    BB.game.load.image('level_buttons_small', '/assets/levelButtons0001.png');
-    BB.game.load.image('level_buttons_big', '/assets/levelButtons0002.png');
     //monsters
     BB.heroController.preload();
     BB.monsterController.preload();
+    BB.piggyController.preload();
 
 
 }
@@ -37,7 +36,8 @@ function create() {
     BB.monsterController.create();
     BB.heroController.create();
 
-    BB.monsterController.addSmallButtons()
+    BB.monsterController.addSmallMonsters()
+    BB.piggyController.create();
 
     resize();
 }
@@ -55,12 +55,17 @@ function centerPlayerAndMonster() {
         mini_monster.x = item.x - 10; //to center
     }
 
+    var lastEnemyPossitionX = BB.game.currentMonster.x;
     for (var i = 0; i < BB.game.small_buttons_after.length; i++) {
         var item = BB.game.small_buttons_after[i];
         item.x = BB.game.scale.width / 2 + 200 + 100 * i;
         var mini_monster =  BB.game.small_monsters_after[i];
         mini_monster.x = item.x - 10; //to center
+
+        lastEnemyPossitionX = mini_monster.x;
     }
+
+    BB.game.piggy.x = lastEnemyPossitionX + 200;
 }
 
 function finishDay() {
@@ -68,11 +73,14 @@ function finishDay() {
     if (playerWon) {
         BB.game.hero.animations.play('attack3', null, false);
         BB.game.currentMonster.animations.play('defeat', null, false);
+        
+        BB.game.piggy.animations.play('cheer');
     } else {
         BB.game.hero.animations.play('hit', null, false);
         BB.game.currentMonster.animations.play('attack', null, false);
         BB.game.currentMonster.animations.currentAnim.onComplete.add(function () {
             BB.game.currentMonster.animations.play('win');
+            BB.game.piggy.animations.play('worry');
         });
     }
 }

@@ -1,7 +1,9 @@
 BB.monsterController = {
 	preload : function()
 	{
-		BB.game.load.atlasJSONHash('monster', 'assets/monster.png', 'assets/monster.json');
+		BB.game.load.atlasJSONHash('monster', 'assets/monster.png', 'assets/monster.json');		
+	    BB.game.load.image('level_buttons_small', '/assets/levelButtons0001.png');
+	    BB.game.load.image('level_buttons_big', '/assets/levelButtons0002.png');
 	},
 
 	create : function()
@@ -25,13 +27,11 @@ BB.monsterController = {
 
 	addAllMonsters : function()
 	{
-
 		console.log("Monsters!:");
 		console.log(BB.game.monsters_json);
-
 	},
 
-	addSmallButtons : function()
+	addSmallMonsters : function()
 	{
 		BB.game.small_buttons_before = [];
 		BB.game.small_monsters_before = [];
