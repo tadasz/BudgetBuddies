@@ -24,7 +24,7 @@ var userSchema = new mongoose.Schema({
   },
 
   game: {
-    salery: { type: Number, default: 2000 },
+    salary: { type: Number, default: 2000 },
     goal: { type: Number, default: 500 },
     daily: { type: Number, default: 50 },
     expenseHistory: [],

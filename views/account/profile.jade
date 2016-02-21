@@ -7,9 +7,9 @@ block content
   form.form-horizontal(action='/account/game/settings', method='POST')
     input(type='hidden', name='_csrf', value=_csrf)
     .form-group
-      label.col-sm-3.control-label(for='salery') Salery
+      label.col-sm-3.control-label(for='salery') Salary
       .col-sm-7
-        input.form-control(type='salery', name='salery', id='salery', value='#{user.game.salery}')
+        input.form-control(type='salary', name='salery', id='salary', value='#{user.game.salary}')
     .form-group
       label.col-sm-3.control-label(for='goal') Goal
       .col-sm-7
@@ -142,7 +142,7 @@ block scripts
             $("#daily").val(val);
         }
         
-        function calcutlateDaily() {
+        function calculateDaily() {
             var s = Number($("#salery").val());
             var g = Number($("#goal").val());
             setDailyValue(Math.round((s - g) / 30));
@@ -151,7 +151,7 @@ block scripts
         $(document).ready(function() {
             $("#salery").keyup(function(e) {
                 if ($("#salery").val().match(/^[0-9]*$/g))
-                    setTimeout(calcutlateDaily, 200);
+                    setTimeout(calculateDaily, 200);
                 else
                     $("#salery").val(($("#salery").val().substring(0, $("#salery").val().length -1)));
             });
@@ -159,9 +159,9 @@ block scripts
                 console.log($("#goal").val().length);
             
                 if ($("#goal").val().match(/^[0-9]*$/g) != null)
-                   setTimeout(calcutlateDaily, 200)
+                   setTimeout(calculateDaily, 200)
                 else
                     $("#goal").val(($("#goal").val().substring(0, $("#goal").val().length -1)));
             });
-            calcutlateDaily();
+            calculateDaily();
         });
