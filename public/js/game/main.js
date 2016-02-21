@@ -61,8 +61,6 @@ function centerPlayerAndMonster() {
         var mini_monster =  BB.game.small_monsters_after[i];
         mini_monster.x = item.x - 10; //to center
     }
-
-
 }
 
 function finishDay() {
@@ -103,4 +101,30 @@ function createBackgrounds()
 }
 
 function update() {
+}
+
+//*** number validation ***
+
+function parseEnteredItem(input) {
+    var withoutCurrency = input.replace("$", " ").replace("€", " ").replace("£", " ");
+    console.log(withoutCurrency);
+    var price = getItemPrice(withoutCurrency)
+    console.log("price: " + price)
+    console.log("name: " + withoutCurrency.replace(price, " ").replace(/\s{2,}/g, ' '))
+}
+
+function getItemPrice(input) {
+
+    var words = input.split(" ");
+    for (var i = 0; i < words.length; i++) {
+        var word = words[i];
+        if (isNumeric(word)) {
+            return word;
+        }
+    }
+    return 0.00;
+}
+
+function isNumeric(n) {
+  return !isNaN(parseFloat(n)) && isFinite(n);
 }

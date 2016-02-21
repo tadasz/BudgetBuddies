@@ -41,6 +41,7 @@ block scripts
       $("#expense_input").keypress(function(e) {
           if(e.which == 13) {
                 var expense_input = $("#expense_input").prop("value");
+                parseEnteredItem(expense_input);
                 $.get( "/game/expense", { date:Date.now(), value:expense_input });
                 BB.heroController.attack();
                 BB.monsterController.hitCurrent();
