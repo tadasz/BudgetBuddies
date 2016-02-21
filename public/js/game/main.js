@@ -18,25 +18,32 @@ function preload() {
     //monsters
     BB.heroController.preload();
     BB.monsterController.preload();
-    
+    BB.game.load.image('level_buttons_small', '/assets/levelButtons0001.png');
+    BB.game.load.image('level_buttons_big', '/assets/levelButtons0002.png');
+
 }
 
 function create() {
     BB.game.scale.pageAlignHorizontally = true;
     BB.game.scale.pageAlignVertically = true;
     
-
     createBackgrounds();
-    BB.heroController.create();
-    BB.monsterController.create();
 
+    var big_button = BB.game.add.sprite(460, 370, 'level_buttons_big');
+    big_button.anchor.set(0.5, 1);
+    BB.game.big_button = big_button;
+
+    BB.monsterController.create();
+    BB.heroController.create();
+    
+    
     resize();
 }
 
-var marginBetweenPlayerAndMonster = 10.0;
 function centerPlayerAndMonster() {
-    BB.game.hero.x = BB.game.scale.width / 2 - BB.game.hero.width / 2 + marginBetweenPlayerAndMonster;
-    BB.game.currentMonster.x = BB.game.scale.width / 2 + BB.game.currentMonster.width / 2 + marginBetweenPlayerAndMonster;
+    BB.game.hero.x = BB.game.scale.width / 2 - BB.game.hero.width / 2 + 14;
+    BB.game.currentMonster.x = BB.game.scale.width / 2 + BB.game.currentMonster.width / 2 - 20;
+    BB.game.big_button.x = BB.game.scale.width / 2;
 }
 
 function goToPreviousDay()
@@ -52,7 +59,7 @@ function goToNextDay()
 function createBackgrounds()
 {
     var bg_tile_width = 400
-    var bg_tiles = 4
+    var bg_tiles = 10
     var bg_group = BB.game.add.group();
 
     for (var i=0; i < bg_tiles; i++)

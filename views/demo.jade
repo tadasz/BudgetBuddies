@@ -49,8 +49,9 @@ block scripts
     });
 
   script.
-    $(document).ready(function() {
-      BB.game.monsters_json = $.get("/game/monster/month");
+    $(document).ready(function() {      
+      var json = $.get("/game/monster/month");
+      BB.game.monsters_json = json;
       BB.monsterController.addAllMonsters();
     });
 

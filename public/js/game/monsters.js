@@ -19,8 +19,9 @@ BB.monsterController = {
 
 	addAllMonsters : function()
 	{
-		console.log("Monsters json:");
+		console.log("Monsters!:");
 		console.log(BB.game.monsters_json);
+			
 	}
 
 
