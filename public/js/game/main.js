@@ -44,18 +44,6 @@ function createCharacter()
 
     game.hero = hero;
 
-    // all_animations = ['attack1', 'attack2', 'attack3', 'hit', 'idle'];
-    // game.input.keyboard.onDownCallback = function(e) {
-    //     // console.log(e.keyCode);
-    //     if (e.keyCode == 32) {
-    //         current_anim++;
-    //         if (current_anim >= all_animations.length) {
-    //             current_anim = 0;
-    //         }
-    //         next_anim = all_animations[current_anim];
-    //         hero.animations.play(next_anim);
-    //     }
-    // }
 }
 
 current_pose = 'pose1'
