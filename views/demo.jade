@@ -26,7 +26,7 @@ block game_content
     //- input.previous_day_button(type="button", value="<<<", onclick="goToPreviousDay()")
     input.main_input(type="text", id="expense_input")
     //- input.next_day_button(type="button", value=">>>", onclick="goToNextDay()")
-    ul.game_expense_list.list-group.text-center
+    ul.game_expense_list.list-group.text-center(id="expense_list")
       li.list-group-item
         span.date
           | 18h29min
@@ -56,6 +56,15 @@ block scripts
         finishDay();
     }
 
+    function insertExpense(str) {
+      var description = str;
+      var value = "€10.00";
+      var date = new Date().toLocaleTimeString();;
+
+      $("<li class='list-group-item'><span class='date'>"+date+"</span> "+description+" <span class='cost'>"+value+"</span></li>").prependTo("#expense_list");
+
+    }
+
   script.
     $(document).ready(function(){
       $("#expense_input").keypress(function(e) {
@@ -64,8 +73,10 @@ block scripts
                 $.get( "/game/expense", { date:Date.now(), value:expense_input });
                 BB.heroController.attack();
                 BB.monsterController.hitCurrent();
+                insertExpense($("#expense_input").val());
                 $("#expense_input").val("");
                 POWERMODE.spawnParticles();
+
           }
       });
     });

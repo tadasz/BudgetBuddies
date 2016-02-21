@@ -2,6 +2,9 @@
   /*background-color: #ff00ff;*/
 }
 
+.game_expense_list {
+  margin-bottom: 100px;
+}
 .game_expense_list .list-group-item{
   width:60%;
   height:60px;
