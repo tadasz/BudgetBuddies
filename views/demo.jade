@@ -44,14 +44,24 @@ block scripts
           if(e.which == 13) {
                 var expense_input = $("#expense_input").prop("value");
                 $.get( "/game/expense", { date:Date.now(), value:expense_input });
-                attack();
+                BB.heroController.attack();
                 $("#expense_input").val("");
                 POWERMODE.spawnParticles();
           }
       });
     });
+
+  script.
+    $(document).ready(function() {
+      BB.game.monsters_json = $.get("/game/monster/month");
+      BB.monsterController.addAllMonsters();
+    });
+
   script(src='/js/lib/activate-power-mode.js')
   script(src='/js/lib/phaser.min.js')
+  script(src='/js/game/init.js')
+  script(src='/js/game/monsters.js')
+  script(src='/js/game/hero.js')
   script(src='/js/game/main.js')
 
 
@@ -60,7 +70,7 @@ block scripts
     POWERMODE.colorful = true;
     document.body.addEventListener('input', POWERMODE);
     document.body.addEventListener('input', function() {
-      setCharacterPose();
+      BB.heroController.setCharacterPose();
     });
   
 
