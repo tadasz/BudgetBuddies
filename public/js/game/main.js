@@ -18,15 +18,15 @@ function preload() {
     //monsters
     BB.heroController.preload();
     BB.monsterController.preload();
+
     BB.game.load.image('level_buttons_small', '/assets/levelButtons0001.png');
     BB.game.load.image('level_buttons_big', '/assets/levelButtons0002.png');
-
 }
 
 function create() {
     BB.game.scale.pageAlignHorizontally = true;
     BB.game.scale.pageAlignVertically = true;
-    
+
     createBackgrounds();
 
     var big_button = BB.game.add.sprite(460, 370, 'level_buttons_big');
@@ -40,10 +40,31 @@ function create() {
     resize();
 }
 
+// <<<<<<< HEAD
+// function centerPlayerAndMonster() {
+//     BB.game.hero.x = BB.game.scale.width / 2 - BB.game.hero.width / 2 + 14;
+//     BB.game.currentMonster.x = BB.game.scale.width / 2 + BB.game.currentMonster.width / 2 - 20;
+// =======
+var marginBetweenPlayerAndMonster = 5.0;
 function centerPlayerAndMonster() {
-    BB.game.hero.x = BB.game.scale.width / 2 - BB.game.hero.width / 2 + 14;
-    BB.game.currentMonster.x = BB.game.scale.width / 2 + BB.game.currentMonster.width / 2 - 20;
+    BB.game.hero.x = BB.game.scale.width / 2 - BB.game.hero.width - marginBetweenPlayerAndMonster;
+    BB.game.currentMonster.x = BB.game.scale.width / 2 + BB.game.currentMonster.width + marginBetweenPlayerAndMonster;
     BB.game.big_button.x = BB.game.scale.width / 2;
+
+}
+
+function finishDay() {
+    var playerWon = Math.floor(Math.random() * 2) == 1
+    if (playerWon) {
+        BB.game.hero.animations.play('attack3', null, false);
+        BB.game.currentMonster.animations.play('defeat', null, false);
+    } else {
+        BB.game.hero.animations.play('hit', null, false);
+        BB.game.currentMonster.animations.play('attack', null, false);
+        BB.game.currentMonster.animations.currentAnim.onComplete.add(function () {
+            BB.game.currentMonster.animations.play('win');
+        });
+    }
 }
 
 function goToPreviousDay()
@@ -53,13 +74,13 @@ function goToPreviousDay()
 
 function goToNextDay()
 {
-    console.log("next day...");   
+    console.log("next day...");
 }
 
 function createBackgrounds()
 {
     var bg_tile_width = 400
-    var bg_tiles = 10
+    var bg_tiles = 4
     var bg_group = BB.game.add.group();
 
     for (var i=0; i < bg_tiles; i++)
