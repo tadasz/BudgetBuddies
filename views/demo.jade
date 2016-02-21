@@ -8,7 +8,7 @@ block content
     | (
     .glyphicon.glyphicon-sunglasses
     | )
-    input.finish_day_button(type="button", value="Finish day", onclick="reportEndOfDay()"))
+    input.finish_day_button(type="button", value="Finish day", onclick="reportEndOfDay()")
 
   //- h2 Debug Options
   //- p
@@ -24,13 +24,22 @@ block content
         p
           | &#x1F44A; ATTACK by logging your expense below:
 
+  .input_container
+    input.previous_day_button(type="button", value="<<<", onclick="showPreviousDay()")
+    input.main_input(type="text", id="expense_input")
+    input.next_day_button(type="button", value=">>>", onclick="showNextDay()")
+
 block scripts
   //- script(src='/js/lib/jquery.inputmask.bundle.min.js')
 
   script.
-    function reportEndOfDay() {
-        console.log("something")
-        $.get( "/game/summary/new", {date:Date.now(), balance: 20 });
+    function showPreviousDay() {
+        console.log("previous day...")        
+    }
+  
+  script.
+    function showNextDay() {
+        console.log("next day...")        
     }
 
   script.
@@ -58,8 +67,6 @@ block scripts
       setCharacterPose();
     });
   
-  .input_container
-    input.previous_day_button(type="button", value="<<<")
-    input.main_input(type="text", id="expense_input")
+
 
 
