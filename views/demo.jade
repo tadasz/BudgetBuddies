@@ -29,19 +29,19 @@ block game_content
     ul.game_expense_list.list-group.text-center(id="expense_list")
       li.list-group-item
         span.date
-          | 18h29min
+          | 3 minutes ago
         | Lunch - burgers
         span.cost
           | €15.00
       li.list-group-item
         span.date
-          | 18h29min
+          | 4 minutes ago
         | dönner kebap
         span.cost
           | €3.00
       li.list-group-item
         span.date
-          | 18h30min
+          | 5 minutes ago
         | club mate
         span.cost
           | €2.00
@@ -81,9 +81,10 @@ block scripts
       return !isNaN(parseFloat(n)) && isFinite(n);
     }
 
-    function insertExpense(str) {
-      var value = getItemPrice(str);
-      var description = str.replace(value, "");
+    function insertExpense(input) {
+      var withoutCurrency = input.replace("$", " ").replace("€", " ").replace("£", " ");
+      var value = getItemPrice(withoutCurrency);
+      var description = withoutCurrency.replace(value, " ").replace(/\s{2,}/g, ' ')
       var value_str = "€" + parseFloat(value).toFixed(2);
       var date = new Date().toLocaleTimeString();;
 
@@ -119,6 +120,7 @@ block scripts
   script(src='/js/lib/phaser.min.js')
   script(src='/js/game/init.js')
   script(src='/js/game/monsters.js')
+  script(src='/js/game/piggy.js')
   script(src='/js/game/hero.js')
   script(src='/js/game/main.js')
 
