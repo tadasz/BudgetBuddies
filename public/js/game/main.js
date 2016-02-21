@@ -15,12 +15,13 @@ window.onresize = resize;
 
 function preload() {
     BB.game.load.image('bg_tile', '/assets/bg_tile.png');
+    BB.game.load.image('level_buttons_small', '/assets/levelButtons0001.png');
+    BB.game.load.image('level_buttons_big', '/assets/levelButtons0002.png');
     //monsters
     BB.heroController.preload();
     BB.monsterController.preload();
 
-    BB.game.load.image('level_buttons_small', '/assets/levelButtons0001.png');
-    BB.game.load.image('level_buttons_big', '/assets/levelButtons0002.png');
+
 }
 
 function create() {
@@ -36,20 +37,31 @@ function create() {
     BB.monsterController.create();
     BB.heroController.create();
     
-    
+    BB.monsterController.addSmallButtons()
+
     resize();
 }
 
-// <<<<<<< HEAD
-// function centerPlayerAndMonster() {
-//     BB.game.hero.x = BB.game.scale.width / 2 - BB.game.hero.width / 2 + 14;
-//     BB.game.currentMonster.x = BB.game.scale.width / 2 + BB.game.currentMonster.width / 2 - 20;
-// =======
 var marginBetweenPlayerAndMonster = 5.0;
 function centerPlayerAndMonster() {
     BB.game.hero.x = BB.game.scale.width / 2 - BB.game.hero.width - marginBetweenPlayerAndMonster;
     BB.game.currentMonster.x = BB.game.scale.width / 2 + BB.game.currentMonster.width + marginBetweenPlayerAndMonster;
     BB.game.big_button.x = BB.game.scale.width / 2;
+
+    for (var i = 0; i < BB.game.small_buttons_before.length; i++) {
+        var item = BB.game.small_buttons_before[i];
+        var mini_monster =  BB.game.small_monsters_before[i];
+        item.x = BB.game.scale.width / 2 - 200 - 100 * i;
+        mini_monster.x = item.x - 10; //to center
+    }
+
+    for (var i = 0; i < BB.game.small_buttons_after.length; i++) {
+        var item = BB.game.small_buttons_after[i];
+        item.x = BB.game.scale.width / 2 + 200 + 100 * i;
+        var mini_monster =  BB.game.small_monsters_after[i];
+        mini_monster.x = item.x - 10; //to center
+    }
+
 
 }
 
