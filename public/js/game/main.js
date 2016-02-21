@@ -15,6 +15,8 @@ window.onresize = resize;
 function preload() {
     game.load.image('bg_tile', '/assets/bg_tile.png');
     game.load.atlasJSONHash('hero', 'assets/hero.png', 'assets/hero.json');
+    //monsters
+    game.load.atlasJSONHash('monster', 'assets/monster.png', 'assets/monster.json');
 }
 
 function create() {
@@ -24,8 +26,7 @@ function create() {
 
     createBackgrounds();
     createCharacter();
-
-
+    createMonster();
 }
 
 function createCharacter()
@@ -43,19 +44,17 @@ function createCharacter()
     hero.animations.play('idle');
 
     game.hero = hero;
+}
 
-    // all_animations = ['attack1', 'attack2', 'attack3', 'hit', 'idle'];
-    // game.input.keyboard.onDownCallback = function(e) {
-    //     // console.log(e.keyCode);
-    //     if (e.keyCode == 32) {
-    //         current_anim++;
-    //         if (current_anim >= all_animations.length) {
-    //             current_anim = 0;
-    //         }
-    //         next_anim = all_animations[current_anim];
-    //         hero.animations.play(next_anim);
-    //     }
-    // }
+function createMonster()
+{
+    var monster = game.add.sprite(460, 350, 'monster');
+    monster.anchor.set(0, 1);
+    monster.animations.add('attack', ['monster_attack0000'], 22, true);
+    monster.animations.add('defeat', ['monster_defeat0000'], 22, true);
+    monster.animations.add('hit', ['monster_hit0000'], 22, true);
+    monster.animations.add('idle', ['monster_idle0000'], 22, true);
+    monster.animations.add('win', ['monster_win0000'], 22, true);
 }
 
 current_pose = 'pose1'
