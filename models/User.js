@@ -24,12 +24,11 @@ var userSchema = new mongoose.Schema({
   },
 
   game: {
-    salery: { type: Number, default: 850 },
-    goal: { type: Number, default: 300 },
-    expenses: [],
-    dailySummaries: []
+    salery: { type: Number, default: 2000 },
+    goal: { type: Number, default: 500 },
+    daily: { type: Number, default: 50 },
+    expenses: []
   },
-
 
   resetPasswordToken: String,
   resetPasswordExpires: Date
