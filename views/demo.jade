@@ -3,11 +3,9 @@ extends layout
 block style
   link(rel='stylesheet', href='/css/demo.css')
 
-block content
+block game_content
   h1 #{date_title}
-    | (
-    .glyphicon.glyphicon-sunglasses
-    | )
+    input.finish_day_button(type="button", value="Finish day", onclick="reportEndOfDay()")
 
   //- h2 Debug Options
   //- p
@@ -23,12 +21,17 @@ block content
         p
           | &#x1F44A; ATTACK by logging your expense below:
 
+  .input_container
+    input.previous_day_button(type="button", value="<<<", onclick="goToPreviousDay()")
+    input.main_input(type="text", id="expense_input")
+    input.next_day_button(type="button", value=">>>", onclick="goToNextDay()")
+
 block scripts
   //- script(src='/js/lib/jquery.inputmask.bundle.min.js')
 
   script.
     function reportEndOfDay() {
-        console.log("something")
+        console.log("reporting the end of the day...")
         $.get( "/game/summary/new", {date:Date.now(), balance: 20 });
     }
 
@@ -56,7 +59,4 @@ block scripts
     document.body.addEventListener('input', function() {
       setCharacterPose();
     });
-  .input_container
-    input.main_input(type="text", id="expense_input")
-
 

@@ -192,7 +192,7 @@ exports.postUpdateGameSettings = function(req, res, next) {
     if (err) {
       return next(err);
     }
-    user.game.salery = req.body.salery || '';
+    user.game.salary = req.body.salary || '';
     user.game.goal = req.body.goal || '';
     user.game.daily = req.body.daily || '';
     user.save(function(err) {

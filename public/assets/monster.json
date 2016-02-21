@@ -1,0 +1,51 @@
+﻿{"frames": {
+
+"monster_attack0000":
+{
+	"frame": {"x":3,"y":3,"w":186,"h":163},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":186,"h":163},
+	"sourceSize": {"w":186,"h":163}
+},
+"monster_defeat0000":
+{
+	"frame": {"x":3,"y":3,"w":186,"h":163},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":186,"h":163},
+	"sourceSize": {"w":186,"h":163}
+},
+"monster_hit0000":
+{
+	"frame": {"x":3,"y":3,"w":186,"h":163},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":186,"h":163},
+	"sourceSize": {"w":186,"h":163}
+},
+"monster_idle0000":
+{
+	"frame": {"x":3,"y":3,"w":186,"h":163},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":186,"h":163},
+	"sourceSize": {"w":186,"h":163}
+},
+"monster_win0000":
+{
+	"frame": {"x":3,"y":3,"w":186,"h":163},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":186,"h":163},
+	"sourceSize": {"w":186,"h":163}
+}},
+"meta": {
+	"app": "Adobe Flash Professional",
+	"version": "14.2.0.20",
+	"image": "monster.png",
+	"format": "RGBA8888",
+	"size": {"w":256,"h":256},
+	"scale": "1"
+}
+}
