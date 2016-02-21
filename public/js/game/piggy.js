@@ -18,6 +18,10 @@ BB.piggyController = {
 
 	celebrate : function() {
 		BB.game.piggy.animations.play('cheer', null, false);
+		BB.game.piggy.animations.currentAnim.onComplete.add(function () {
+		    BB.game.piggy.animations.play('idle');
+
+		});
 	}
 
 
