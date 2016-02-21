@@ -1,8 +1,10 @@
 extends layout
 
 block content
-  h1
-    | #{date_title}
+  h1 #{date_title}
+    | (
+    .glyphicon.glyphicon-sunglasses
+    | )
     input.finish_day_button(type="button", value="Finish day")
 
 
@@ -27,6 +29,9 @@ block scripts
           if(e.which == 13) {
                 var expense_input = $("#expense_input").prop("value");
                 $.get( "/game/expense", { date:Date.now(), value:expense_input });
+                attack();
+                $("#expense_input").val("");
+                POWERMODE.spawnParticles();
           }
       });
     });
@@ -39,6 +44,9 @@ block scripts
   script.
     POWERMODE.colorful = true;
     document.body.addEventListener('input', POWERMODE);
+    document.body.addEventListener('input', function() {
+      setCharacterPose();
+    });
   .input_container
     input.main_input(type="text", id="expense_input")
 

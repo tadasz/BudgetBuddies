@@ -37,21 +37,53 @@ function createCharacter()
     hero.animations.add('attack3', Phaser.Animation.generateFrameNames('attack03', 0, 20, '', 4), 22, true);
     hero.animations.add('hit',     Phaser.Animation.generateFrameNames('hit', 0, 21, '', 4),      22, true);
     hero.animations.add('idle',    Phaser.Animation.generateFrameNames('idle', 0, 79, '', 4),     22, true);
+    hero.animations.add('pose1', ['pose010000'],     22, true);
+    hero.animations.add('pose2', ['pose020000'],     22, true);
+    hero.animations.add('pose3', ['pose030000'],     22, true);
     hero.animations.play('idle');
 
-    all_animations = ['attack1', 'attack2', 'attack3', 'hit', 'idle'];
-    current_anim = 0;
-    game.input.keyboard.onDownCallback = function(e) {
-        // console.log(e.keyCode);
-        if (e.keyCode == 32) {
-            current_anim++;
-            if (current_anim >= all_animations.length) {
-                current_anim = 0;
-            }
-            next_anim = all_animations[current_anim];
-            hero.animations.play(next_anim);
+    game.hero = hero;
+
+    // all_animations = ['attack1', 'attack2', 'attack3', 'hit', 'idle'];
+    // game.input.keyboard.onDownCallback = function(e) {
+    //     // console.log(e.keyCode);
+    //     if (e.keyCode == 32) {
+    //         current_anim++;
+    //         if (current_anim >= all_animations.length) {
+    //             current_anim = 0;
+    //         }
+    //         next_anim = all_animations[current_anim];
+    //         hero.animations.play(next_anim);
+    //     }
+    // }
+}
+
+current_pose = 'pose1'
+function setCharacterPose()
+{
+    var all_poses = ['pose1', 'pose2', 'pose3']
+    for (var i=0; i < all_poses.length; i++)
+    {
+        if (all_poses[i] == current_pose)
+        {
+            all_poses.splice(i, 1)
+            break;
         }
     }
+    var pose_index = Math.floor(Math.random() * all_poses.length)
+    var pose = all_poses[pose_index]
+
+    game.hero.animations.play(pose);
+    current_pose = pose_index;
+}
+
+function attack()
+{
+    var all_attacks = ['attack1', 'attack2', 'attack3'];
+    var atk_index = Math.floor(Math.random() * all_attacks.length)
+    var attack = all_attacks[atk_index]
+
+    game.hero.animations.play(attack, null, false);
 }
 
 function createBackgrounds()

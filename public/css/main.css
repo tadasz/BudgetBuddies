@@ -8846,7 +8846,9 @@ textarea {
   width: 80%;
   height: 100px;
   text-align: center;
-  font-size: 40pt; }
+  font-size: 40pt;
+  border-width: 3px;
+  border-style: solid; }
 
 .attack_container p {
   font-size: 18pt;

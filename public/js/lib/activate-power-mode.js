@@ -74,12 +74,13 @@ return /******/ (function(modules) { // webpackBootstrap
     }
 
     function getColor(el) {
-        if (POWERMODE.colorful) {
-            var u = getRandom(0, 360);
-            return 'hsla(' + getRandom(u - 10, u + 10) + ', 100%, ' + getRandom(50, 80) + '%, ' + 1 + ')';
-        } else {
-            return window.getComputedStyle(el).color;
-        }
+        // if (POWERMODE.colorful) {
+        //     var u = getRandom(0, 360);
+        //     return 'hsla(' + getRandom(u - 10, u + 10) + ', 100%, ' + getRandom(50, 80) + '%, ' + 1 + ')';
+        // } else {
+        //     return window.getComputedStyle(el).color;
+        // }
+        return 'rgba(255,0,0,255)'
     }
 
     function getCaret() {
@@ -91,7 +92,7 @@ return /******/ (function(modules) { // webpackBootstrap
             bcr = el.getBoundingClientRect();
             return {
                 x: offset.left + bcr.left,
-                y: offset.top + bcr.top,
+                y: offset.top + (bcr.top + (bcr.height / 2)),
                 color: getColor(el)
             };
         }
@@ -105,7 +106,7 @@ return /******/ (function(modules) { // webpackBootstrap
             bcr = range.getBoundingClientRect();
             return {
                 x: bcr.left,
-                y: bcr.top,
+                y: bcr.top + (bcr.height / 2),
                 color: getColor(startNode)
             };
         }
@@ -124,18 +125,10 @@ return /******/ (function(modules) { // webpackBootstrap
             }
         };
     }
-
     function POWERMODE() {
-        { // spawn particles
-            var caret = getCaret();
-            var numParticles = 5 + Math.round(Math.random() * 10);
-            while (numParticles--) {
-                particles[particlePointer] = createParticle(caret.x, caret.y, caret.color);
-                particlePointer = (particlePointer + 1) % 500;
-            }
-        }
+
         { // shake screen
-            var intensity = 1 + 2 * Math.random();
+            var intensity = 3 + 2 * Math.random();
             var x = intensity * (Math.random() > 0.5 ? -1 : 1);
             var y = intensity * (Math.random() > 0.5 ? -1 : 1);
             document.body.style.marginLeft = x + 'px';
@@ -147,6 +140,15 @@ return /******/ (function(modules) { // webpackBootstrap
         }
     };
     POWERMODE.colorful = false;
+    POWERMODE.spawnParticles = function() {
+      // spawn particles
+      var caret = getCaret();
+      var numParticles = 50 + Math.round(Math.random() * 10);
+      while (numParticles--) {
+          particles[particlePointer] = createParticle(caret.x, caret.y, caret.color);
+          particlePointer = (particlePointer + 1) % 500;
+      }
+    }
 
     function loop() {
         requestAnimationFrame(loop);
