@@ -99,7 +99,7 @@ block scripts
       var withoutCurrency = input.replace("$", " ").replace("€", " ").replace("£", " ");
       var value = getItemPrice(withoutCurrency);
       var description = withoutCurrency.replace(value, " ").replace(/\s{2,}/g, ' ')
-      var value_str = "€" + parseFloat(value).toFixed(2);
+      var value_str = "$" + parseFloat(value).toFixed(2);
       var date = new Date().toLocaleTimeString();;
 
       BB.expensesSum += parseFloat(value);
