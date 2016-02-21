@@ -24,6 +24,11 @@ BB.monsterController = {
 	hitCurrent : function()
 	{
 		BB.game.currentMonster.animations.play('hit', null, false);
+        BB.game.currentMonster.animations.currentAnim.onComplete.add(function () {
+		    BB.game.currentMonster.animations.play('idle');
+
+		});
+
 	},
 
 	addAllMonsters : function()
