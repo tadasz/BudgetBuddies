@@ -6,7 +6,9 @@ block style
 block game_content
   .header
     h1 #{date_title}
-      input.finish_day_button(type="button", value="Finish day", onclick="reportEndOfDay()")
+      input.finish_day_button(type="button", value="Finish day", onclick="reportEndOfDay()")      
+      span(id="budget_span").budget-span
+          | Daily budget: -/-
 
   //- h2 Debug Options
   //- p
@@ -32,23 +34,30 @@ block game_content
           | 3 minutes ago
         | Lunch - burgers
         span.cost
-          | €15.00
+          | $15.00
       li.list-group-item
         span.date
           | 4 minutes ago
         | dönner kebap
         span.cost
-          | €3.00
+          | $3.00
       li.list-group-item
         span.date
           | 5 minutes ago
         | club mate
         span.cost
-          | €2.00
+          | $2.00
 
 block scripts
   //- script(src='/js/lib/jquery.inputmask.bundle.min.js')
-
+  script(src='/js/lib/activate-power-mode.js')
+  script(src='/js/lib/phaser.min.js')
+  script(src='/js/game/init.js')
+  script(src='/js/game/monsters.js')
+  script(src='/js/game/piggy.js')
+  script(src='/js/game/hero.js')
+  script(src='/js/game/main.js')
+  
   script.
     function reportEndOfDay() {
         console.log("reporting the end of the day...")
@@ -58,7 +67,7 @@ block scripts
     //*** number validation ***
 
     function parseEnteredItem(input) {
-        var withoutCurrency = input.replace("$", " ").replace("€", " ").replace("£", " ");
+        var withoutCurrency = input.replace("$", " ").replace("$", " ").replace("£", " ");
         console.log(withoutCurrency);
         var price = getItemPrice(withoutCurrency)
         console.log("price: " + price)
@@ -81,12 +90,33 @@ block scripts
       return !isNaN(parseFloat(n)) && isFinite(n);
     }
 
+    function updateDailyBudget() {
+      $("#budget_span").html(" Daily budget: " + BB.expensesSum.toFixed(2) + " / 100.00");             
+    }
+
+    BB.expensesSum = parseFloat(2 + 3 + 15);
     function insertExpense(input) {
       var withoutCurrency = input.replace("$", " ").replace("€", " ").replace("£", " ");
       var value = getItemPrice(withoutCurrency);
       var description = withoutCurrency.replace(value, " ").replace(/\s{2,}/g, ' ')
       var value_str = "€" + parseFloat(value).toFixed(2);
       var date = new Date().toLocaleTimeString();;
+
+      BB.expensesSum += parseFloat(value);
+      
+
+      updateDailyBudget()
+
+      console.log("expenses: " + BB.expensesSum)
+      if (BB.expensesSum > 50) {          
+          setBackgroundAttention();
+
+          $("#budget_span").css("color", "#D6E99A");
+      }
+      if (BB.expensesSum > 100) {
+          setBackgroundDanger();          
+          $("#budget_span").css("color", "#EE6630");
+      }
 
       $("<li class='list-group-item'><span class='date'>"+date+"</span> "+description+" <span class='cost'>"+value_str+"</span></li>").prependTo("#expense_list");
 
@@ -106,7 +136,12 @@ block scripts
                 POWERMODE.spawnParticles();
 
           }
-      });
+      });      
+    });
+
+  script.
+    $(document).ready(function(){
+      updateDailyBudget();
     });
 
   script.
@@ -116,13 +151,7 @@ block scripts
       BB.monsterController.addAllMonsters();
     });
 
-  script(src='/js/lib/activate-power-mode.js')
-  script(src='/js/lib/phaser.min.js')
-  script(src='/js/game/init.js')
-  script(src='/js/game/monsters.js')
-  script(src='/js/game/piggy.js')
-  script(src='/js/game/hero.js')
-  script(src='/js/game/main.js')
+  
 
 
 
