@@ -110,8 +110,9 @@ function finishDay() {
         BB.game.piggy.animations.play('worry');
         BB.game.currentMonster.animations.currentAnim.onComplete.add(function () {
             BB.game.hero.animations.play('defeat');
-            BB.game.currentMonster.animations.play('win');
-            showInspector();
+            BB.game.currentMonster.animations.play('win').onComplete.add(function() {
+                showInspector();
+            });            
         });
     }
 }
