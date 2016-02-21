@@ -5,10 +5,7 @@ block style
 
 block game_content
   h1 #{date_title}
-    | (
-    .glyphicon.glyphicon-sunglasses
-    | )
-    input.finish_day_button(type="button", value="Finish day", onclick="reportEndOfDay()"))
+    input.finish_day_button(type="button", value="Finish day", onclick="reportEndOfDay()")
 
   //- h2 Debug Options
   //- p
@@ -57,7 +54,7 @@ block scripts
     document.body.addEventListener('input', function() {
       setCharacterPose();
     });
-  
+
   .input_container
     input.previous_day_button(type="button", value="<<<")
     input.main_input(type="text", id="expense_input")
