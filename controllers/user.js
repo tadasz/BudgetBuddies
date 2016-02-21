@@ -113,6 +113,66 @@ exports.postSignup = function(req, res, next) {
   });
 };
 
+
+/**
+ * GET /lastLogin
+ * track the last user login
+ */
+exports.getLastLogin = function(req, res) {
+    User.findById(req.user.id, function(err, user) {
+        if (err) {
+          return next(err);
+        }
+        
+        if (req.query.date)
+        {
+            user.lastLogin = req.query.date;
+            user.save(function(err) {
+                if (err) {
+                    return next(err);
+                }
+            });
+        }
+        
+        var json = JSON.stringify({last_login: user.lastLogin});
+        res.end(json); 
+    });
+};
+
+/**
+ * GET /lastLogin
+ * track the last user login
+ */
+exports.getUpdateDailyHistory = function(req, res) {
+    User.findById(req.user.id, function(err, user) {
+        if (err) {
+          return next(err);
+        }
+        
+        if (req.query.result)
+        {
+            var data = JSON.parse(req.query.result);
+            //user.game.expenseHistory
+            for (var i =0; i < data.length; i++)
+            {
+                user.game.expenseHistory.push(data[i]);
+            }
+            
+            
+            
+            //user.lastLogin = req.query.date;
+            
+            user.save(function(err) {
+                if (err) {
+                    return next(err);
+                }
+            });
+        }
+        
+        //res.end('');
+    });
+};
+
 /**
  * GET /account
  * Profile page.

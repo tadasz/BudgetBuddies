@@ -27,11 +27,13 @@ var userSchema = new mongoose.Schema({
     salery: { type: Number, default: 2000 },
     goal: { type: Number, default: 500 },
     daily: { type: Number, default: 50 },
+    expenseHistory: [],
     expenses: []
   },
 
   resetPasswordToken: String,
-  resetPasswordExpires: Date
+  resetPasswordExpires: Date,
+  lastLogin: Date
 });
 
 /**

@@ -14,6 +14,8 @@ var Monster = require('../models/Monster');
  * User input for expense
  */
 exports.postExpense = function(req, res) {
+    
+    
   if (req.isAuthenticated()) {
      //Store expense in user database
       User.findById(req.user.id, function(err, user) {
@@ -28,20 +30,8 @@ exports.postExpense = function(req, res) {
         //start validating user input
           
           
-          /* RENDER NEXT SCREEN
-            e.g.
-            res.render('account/profile', {
-            title: 'Account Management'
-          });*/
-        
-        
-        
-        
-        
-        
-        var date = new Date();
-        var nowDate = String(date.toUTCString());
-        user.game.expenses.push({ timestamp: nowDate, value: req.body.expense });
+        //user.game.expenses = []; // cleaning testing, has to be removed!!!
+        user.game.expenses.push({ timestamp:req.query.date , value:req.query.value });
         
         user.save(function(err) {
           if (err) {
@@ -62,21 +52,27 @@ exports.getMonstersForThisMonth = function(req, res) {
     //get data from db, filter only for one month
     var today = new Date();
     
-    //TODO: probably should filter only from today till the end of the month
-    var allDaysInMonth = getDaysInMonth(parseInt(moment().format("MM")) - 1, parseInt(moment().format("YYYY")));
+    
+    var allDaysInMonth = getDaysInMonth(parseInt(moment().format("MM")) - 1,parseInt(moment().format("YYYY")));
+    console.log("**********");
+    console.log(allDaysInMonth);
     
     var monsters = Monster.find({
         date: {
             $gte: allDaysInMonth[allDaysInMonth.length - 1],
             $lt: allDaysInMonth[0]
          
-        }}, function (err, docs) {
+        }
+    // appearance_id: 1
+        }, function (err, docs) {
             if (err) {
                 console.log(err.toString());
             }
             
+            console.log("docs: " + docs);
+            
             var allMonsters = [];
-            if (docs.length < 26) {
+            if (docs.length < 20) {
                 console.log("didnt found em, creating :(");
                 allMonsters = createNewMonsters(allDaysInMonth);
             } else {
@@ -117,9 +113,8 @@ function createNewMonsters(allDaysInMonth) {
 }
 
 exports.postDaySummary = function(req, res) {
-    console.log("postDaySummary was called");
-// if (req.isAuthenticated()) {
-     
+if (req.isAuthenticated()) {
+     //Store moster in user database
       User.findById(req.user.id, function(err, user) {
         if (err) {
           return next(err);
@@ -127,9 +122,9 @@ exports.postDaySummary = function(req, res) {
         
         var date = req.body.date;
         
-        user.game.dailySummaries.push({ "date": date, "balance": req.body.balance });
+        user.game.dailySummaries.push({ "date": req.body.date, "balance": req.body.balance });
         //TODO: kill monster if nessesarry
-        killMonster(req.body.balance > 0 ? true : false, new Date());
+        killMonster(new Date());
         user.save(function(err) {
           if (err) {
             return next(err);
@@ -138,13 +133,14 @@ exports.postDaySummary = function(req, res) {
           res.redirect('/');
         });
     });
-//   }
+      
+  }
+
 };
 
-function killMonster(monsterDie, date) {
-    console.log("killing me softly...");
-    var today = moment(date).startOf('day');
-    var tomorrow = moment(today).add(1, 'days');
+function killMonster(date) {
+    var today = moment(date).startOf('day')
+    var tomorrow = moment(today).add(1, 'days')
     
     Monster.find({
       date: {
@@ -153,9 +149,6 @@ function killMonster(monsterDie, date) {
       }
         
     }, function (err, docs) {
-        if (err) {
-            console.log(err.toString());
-        }
         console.log(docs);
     });
     
@@ -163,9 +156,10 @@ function killMonster(monsterDie, date) {
 
 
 function getDaysInMonth(month, year) {
-    var date = new Date(year, month, 1);
-    var days = [];
-    while (date.getMonth() === month) {
+    console.log("month: " + month + ", year: " + year);
+     var date = new Date(year, month, 1);
+     var days = [];
+     while (date.getMonth() === month) {
         days.push(new Date(date));
         date.setDate(date.getDate() + 1);
      }
