@@ -77,15 +77,18 @@ function finishDay() {
 
     if (playerWon) {
         BB.game.hero.animations.play('attack3', null, false);
-        BB.game.currentMonster.animations.play('defeat', null, false);
+        BB.game.currentMonster.animations.play('defeat', null, false).onComplete.add(function() {
+                showInspector();
+            });
 
         BB.game.piggy.animations.play('cheer');
     } else {
         BB.game.hero.animations.play('hit', null, false);
         BB.game.currentMonster.animations.play('attack', null, false);
+        BB.game.piggy.animations.play('worry');
         BB.game.currentMonster.animations.currentAnim.onComplete.add(function () {
             BB.game.currentMonster.animations.play('win');
-            BB.game.piggy.animations.play('worry');
+            showInspector();
         });
     }
 }

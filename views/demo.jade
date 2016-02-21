@@ -3,10 +3,31 @@ extends game_layout
 block style
   link(rel='stylesheet', href='/css/demo.css')
 
+
 block game_content
+
+  .modal.fade(id="myModal", backdrop="static")
+        .modal-dialog.modal-sm
+            .modal-content
+                .modal-header
+                    //- button.close(type='button', data-dismiss='modal', aria-hidden='true') &times;
+                    
+                    h2.modal-title
+                      span(id="modal_title") 
+                        | Title!
+                    img(src= "/assets/inspector.png")
+                .modal-body
+                    p 
+                      span(id="modal_body") 
+                        | Body!
+                    p #{foo}
+                .modal-footer                    
+                    button.btn.btn-primary(type='button', onclick="restart()") Restart
+
+
   .header
     h1 #{date_title}
-      input.finish_day_button(type="button", value="Finish day", onclick="reportEndOfDay()")      
+      input.finish_day_button(type="button", value="Finish day", onclick="reportEndOfDay()")     
       span(id="budget_span").budget-span
           | Daily budget: -/-
 
@@ -57,13 +78,41 @@ block scripts
   script(src='/js/game/piggy.js')
   script(src='/js/game/hero.js')
   script(src='/js/game/main.js')
+  script(src='/js/lib/bootstrap.min.js')
   
   script.
     function reportEndOfDay() {
         console.log("reporting the end of the day...")
+       
         //- $.get( "/game/summary/new", {date:Date.now(), balance: 20 });
         finishDay();
     }
+
+    function showInspector() {
+        var titleText = "Good job!";
+        var bodyText = "You finished the day within your budget!";
+        if (BB.expensesSum > 100) {
+          titleText = "Oh no..!";
+          bodyText = "You exceeded your daily budget today. Try to keep an eye on your expenses tomorrow!"
+        }
+
+        
+        $("#modal_title").text(titleText); 
+        $("#modal_body").text(bodyText); 
+
+        $("#myModal").modal({
+                      
+          backdrop: 'static',
+          keyboard: true,
+          body: "asdasda"
+        });
+    }
+
+    function restart() {
+      location.reload();
+    }
+
+
     //*** number validation ***
 
     function parseEnteredItem(input) {
@@ -91,11 +140,11 @@ block scripts
     }
 
     function updateDailyBudget() {
-      $("#budget_span").html(" Daily budget: " + BB.expensesSum.toFixed(2) + " / 100.00");             
+      $("#budget_span").text(" Daily budget: " + BB.expensesSum.toFixed(2) + " / 100.00");             
     }
 
     BB.expensesSum = parseFloat(2 + 3 + 15);
-    function insertExpense(input) {
+    function insertExpense(input) {      
       var withoutCurrency = input.replace("$", " ").replace("€", " ").replace("£", " ");
       var value = getItemPrice(withoutCurrency);
       var description = withoutCurrency.replace(value, " ").replace(/\s{2,}/g, ' ')
