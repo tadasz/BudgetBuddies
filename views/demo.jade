@@ -27,7 +27,11 @@ block game_content
 
   .header
     h1 #{date_title}
+<<<<<<< HEAD
       input.finish_day_button(type="button", value="Finish day", onclick="reportEndOfDay()")     
+=======
+      input.finish_day_button(type="button", value="Finish day", onclick="reportEndOfDay()")
+>>>>>>> ded27d1869914861571cf37f1c381b403f82aeef
       span(id="budget_span").budget-span
           | Daily budget: -/-
 
@@ -79,7 +83,7 @@ block scripts
   script(src='/js/game/hero.js')
   script(src='/js/game/main.js')
   script(src='/js/lib/bootstrap.min.js')
-  
+
   script.
     function reportEndOfDay() {
         console.log("reporting the end of the day...")
@@ -152,22 +156,24 @@ block scripts
       var date = new Date().toLocaleTimeString();;
 
       BB.expensesSum += parseFloat(value);
-      
+
 
       updateDailyBudget()
 
       console.log("expenses: " + BB.expensesSum)
-      if (BB.expensesSum > 50) {          
+      if (BB.expensesSum > 50) {
           setBackgroundAttention();
 
           $("#budget_span").css("color", "#D6E99A");
       }
       if (BB.expensesSum > 100) {
-          setBackgroundDanger();          
+          setBackgroundDanger();
           $("#budget_span").css("color", "#EE6630");
       }
 
-      $("<li class='list-group-item'><span class='date'>"+date+"</span> "+description+" <span class='cost'>"+value_str+"</span></li>").prependTo("#expense_list");
+      var new_item = $("<li style='display:none' class='list-group-item'><span class='date'>"+date+"</span> "+description+" <span class='cost'>"+value_str+"</span></li>");
+      new_item.prependTo("#expense_list");
+      new_item.fadeIn('slow');
 
     }
 
@@ -185,7 +191,7 @@ block scripts
                 POWERMODE.spawnParticles();
 
           }
-      });      
+      });
     });
 
   script.
@@ -200,7 +206,7 @@ block scripts
       BB.monsterController.addAllMonsters();
     });
 
-  
+
 
 
 

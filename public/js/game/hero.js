@@ -47,6 +47,10 @@ BB.heroController = {
         var attack = all_attacks[atk_index]
 
         BB.game.hero.animations.play(attack, null, false);
+        BB.game.hero.animations.currentAnim.onComplete.add(function () {
+            BB.game.hero.animations.play('idle');
+
+        });
     }
 
 
