@@ -18,12 +18,14 @@
         li(class=title=='Contact'?'active':undefined)
           a(href='/contact') Contact
       ul.nav.navbar-nav.navbar-right
-        if !user
-          li(class=title=='Login'?'active':undefined)
-            a(href='/login') Login
-          li(class=title=='Create Account'?'active':undefined)
-            a(href='/signup') Create Account
-        else
+        li(class="navbar-btn")
+          a(class="btn btn-default", href='/demo') Live Demo
+        //- if !user
+          //- li(class=title=='Login'?'active':undefined)
+          //-   a(href='/login') Login
+          //- li(class=title=='Create Account'?'active':undefined)
+          //-   a(href='/signup') Create Account
+        //- else
           li.dropdown(class=title=='Account Management'?'active':undefined)
             a.dropdown-toggle(href='#', data-toggle='dropdown')
               if user.profile.picture

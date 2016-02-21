@@ -34,6 +34,7 @@ dotenv.load({ path: '.env.example' });
  * Controllers (route handlers).
  */
 var homeController = require('./controllers/home');
+var demoController = require('./controllers/demo');
 var aboutController = require('./controllers/about');
 var userController = require('./controllers/user');
 var gameController = require('./controllers/game');
@@ -134,6 +135,7 @@ app.post('/account/password', passportConf.isAuthenticated, userController.postU
 app.post('/account/delete', passportConf.isAuthenticated, userController.postDeleteAccount);
 app.get('/account/unlink/:provider', passportConf.isAuthenticated, userController.getOauthUnlink);
 app.get('/about', aboutController.index);
+app.get('/demo', demoController.index);
 
 
 //app.get('/stats', userController.getStats);

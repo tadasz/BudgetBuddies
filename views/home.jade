@@ -1,58 +1,8 @@
 extends layout
 
 block content
-  h1 #{date_title}
-    | (
-    .glyphicon.glyphicon-sunglasses
-    | )
-    input.finish_day_button(type="button", value="Finish day", onclick="reportEndOfDay()")
-
-
-  //- p.lead
-  .jumbotron
-    .game_container
-      .game(id="game")
-  //- hr
-  .container
-    .row
-      .attack_container
-        p
-          | &#x1F44A; ATTACK by logging your expense below:
+  h1 Home
 
 block scripts
-  //- script(src='/js/lib/jquery.inputmask.bundle.min.js')
-
-  script.
-    function reportEndOfDay() {
-        console.log("something")
-        $.get( "/game/summary/new", {date:Date.now(), balance: 20 });
-    }
-
-  script.
-    $(document).ready(function(){
-      $("#expense_input").keypress(function(e) {
-          if(e.which == 13) {
-                var expense_input = $("#expense_input").prop("value");
-                $.get( "/game/expense", { date:Date.now(), value:expense_input });
-                attack();
-                $("#expense_input").val("");
-                POWERMODE.spawnParticles();
-          }
-      });
-    });
-  script(src='/js/lib/activate-power-mode.js')
-  script(src='/js/lib/phaser.min.js')
-  script(src='/js/game/main.js')
-
-
-
-  script.
-    POWERMODE.colorful = true;
-    document.body.addEventListener('input', POWERMODE);
-    document.body.addEventListener('input', function() {
-      setCharacterPose();
-    });
-  .input_container
-    input.main_input(type="text", id="expense_input")
 
 
