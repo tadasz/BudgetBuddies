@@ -7,16 +7,19 @@ html
     meta(name='csrf-token', content=_csrf)
     title #{title} - Hackathon Starter
     link(rel='stylesheet', href='/css/lib/bootstrap.min.css')
-    link(rel='stylesheet', href='/css/main.css')
+    //- link(rel='stylesheet', href='css/lib/creative-theme/creative.min.css', type='text/css')
+    //- link(rel='stylesheet', href='/css/main.css')
     block style
   body
-    include partials/header
+    //- include partials/game_header
 
-    .container
-      include partials/flash
-      block content
+    //- .container
+    //-   include partials/flash
+    //-   block content
 
     block game_content
+
+    //- block list_content
 
     include partials/footer
 

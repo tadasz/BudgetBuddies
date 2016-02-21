@@ -1,11 +1,12 @@
-extends layout
+extends game_layout
 
 block style
   link(rel='stylesheet', href='/css/demo.css')
 
 block game_content
-  h1 #{date_title}
-    input.finish_day_button(type="button", value="Finish day", onclick="reportEndOfDay()")
+  .header
+    h1 #{date_title}
+      input.finish_day_button(type="button", value="Finish day", onclick="reportEndOfDay()")
 
   //- h2 Debug Options
   //- p
@@ -22,9 +23,28 @@ block game_content
           | &#x1F44A; ATTACK by logging your expense below:
 
   .input_container
-    input.previous_day_button(type="button", value="<<<", onclick="goToPreviousDay()")
+    //- input.previous_day_button(type="button", value="<<<", onclick="goToPreviousDay()")
     input.main_input(type="text", id="expense_input")
-    input.next_day_button(type="button", value=">>>", onclick="goToNextDay()")
+    //- input.next_day_button(type="button", value=">>>", onclick="goToNextDay()")
+    ul.game_expense_list.list-group.text-center(id="expense_list")
+      li.list-group-item
+        span.date
+          | 18h29min
+        | Lunch - burgers
+        span.cost
+          | €15.00
+      li.list-group-item
+        span.date
+          | 18h29min
+        | dönner kebap
+        span.cost
+          | €3.00
+      li.list-group-item
+        span.date
+          | 18h30min
+        | club mate
+        span.cost
+          | €2.00
 
 block scripts
   //- script(src='/js/lib/jquery.inputmask.bundle.min.js')
@@ -32,7 +52,43 @@ block scripts
   script.
     function reportEndOfDay() {
         console.log("reporting the end of the day...")
-        $.get( "/game/summary/new", {date:Date.now(), balance: 20 });
+        //- $.get( "/game/summary/new", {date:Date.now(), balance: 20 });
+        finishDay();
+    }
+    //*** number validation ***
+
+    function parseEnteredItem(input) {
+        var withoutCurrency = input.replace("$", " ").replace("€", " ").replace("£", " ");
+        console.log(withoutCurrency);
+        var price = getItemPrice(withoutCurrency)
+        console.log("price: " + price)
+        console.log("name: " + withoutCurrency.replace(price, " ").replace(/\s{2,}/g, ' '))
+    }
+
+    function getItemPrice(input) {
+
+        var words = input.split(" ");
+        for (var i = 0; i < words.length; i++) {
+            var word = words[i];
+            if (isNumeric(word)) {
+                return word;
+            }
+        }
+        return 0.00;
+    }
+
+    function isNumeric(n) {
+      return !isNaN(parseFloat(n)) && isFinite(n);
+    }
+
+    function insertExpense(str) {
+      var value = getItemPrice(str);
+      var description = str.replace(value, "");
+      var value_str = "€" + parseFloat(value).toFixed(2);
+      var date = new Date().toLocaleTimeString();;
+
+      $("<li class='list-group-item'><span class='date'>"+date+"</span> "+description+" <span class='cost'>"+value_str+"</span></li>").prependTo("#expense_list");
+
     }
 
   script.
@@ -40,15 +96,30 @@ block scripts
       $("#expense_input").keypress(function(e) {
           if(e.which == 13) {
                 var expense_input = $("#expense_input").prop("value");
-                $.get( "/game/expense", { date:Date.now(), value:expense_input });
-                attack();
+                parseEnteredItem(expense_input);
+                //- $.get( "/game/expense", { date:Date.now(), value:expense_input });
+                BB.heroController.attack();
+                BB.monsterController.hitCurrent();
+                insertExpense($("#expense_input").val());
                 $("#expense_input").val("");
                 POWERMODE.spawnParticles();
+
           }
       });
     });
+
+  script.
+    $(document).ready(function() {
+      var json = $.get("/game/monster/month");
+      BB.game.monsters_json = json;
+      BB.monsterController.addAllMonsters();
+    });
+
   script(src='/js/lib/activate-power-mode.js')
   script(src='/js/lib/phaser.min.js')
+  script(src='/js/game/init.js')
+  script(src='/js/game/monsters.js')
+  script(src='/js/game/hero.js')
   script(src='/js/game/main.js')
 
 
@@ -57,6 +128,8 @@ block scripts
     POWERMODE.colorful = true;
     document.body.addEventListener('input', POWERMODE);
     document.body.addEventListener('input', function() {
-      setCharacterPose();
+      BB.heroController.setCharacterPose();
     });
+
+
 

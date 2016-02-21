@@ -141,7 +141,7 @@ app.get('/updateDailyHistory', userController.getUpdateDailyHistory);
 
 //app.get('/stats', userController.getStats);
 app.get('/game/monster/month', gameController.getMonstersForThisMonth);
-app.post('/game/summary/new', passportConf.isAuthenticated, gameController.postDaySummary);
+app.get('/game/summary/new', passportConf.isAuthenticated, gameController.postDaySummary);
 
 /**
  * Game related routes.

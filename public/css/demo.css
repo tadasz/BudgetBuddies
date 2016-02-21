@@ -1,6 +1,31 @@
+.body {
+  /*background-color: #ff00ff;*/
+}
 
-// Bootstrap overwrites
-// -------------------------
+.game_expense_list {
+  margin-bottom: 100px;
+}
+.game_expense_list .list-group-item{
+  width:60%;
+  height:60px;
+  text-align: center;
+  font-size: 20pt;
+  border-width: 1px;
+  border-style: dotted;
+  border-color: #cecece;
+  margin:0 auto;
+}
+
+.game_expense_list .list-group-item .cost {
+  font-size: 16pt;
+  color: #ff3333;
+  float:right;
+}
+.game_expense_list .list-group-item .date{
+  font-size: 10pt;
+  color: #cccccc;
+  float:left;
+}
 
 .game_container {
   width:100%;

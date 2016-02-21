@@ -1,11 +1,12 @@
+var moment = require('moment');
+
 /**
  * GET /
- * Home page.
+ * Demo page.
  */
 exports.index = function(req, res) {
   res.render('demo', {
-    title: 'Demo',
-    date_title: 'February 20th, 2016',
-    rendering_game: true
+    title: 'Inspector Budget',
+    date_title: moment().format("MMMM Do YYYY")
   });
 };
