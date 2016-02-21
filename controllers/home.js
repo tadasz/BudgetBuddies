@@ -1,3 +1,5 @@
+var User = require('../models/User');
+
 /**
  * GET /
  * Home page.

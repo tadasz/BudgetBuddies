@@ -134,7 +134,8 @@ app.post('/account/password', passportConf.isAuthenticated, userController.postU
 app.post('/account/delete', passportConf.isAuthenticated, userController.postDeleteAccount);
 app.get('/account/unlink/:provider', passportConf.isAuthenticated, userController.getOauthUnlink);
 app.get('/about', aboutController.index);
-
+app.get('/lastLogin', userController.getLastLogin);
+app.get('/updateDailyHistory', userController.getUpdateDailyHistory);
 
 //app.get('/stats', userController.getStats);
 app.get('/game/monster/month', gameController.getMonstersForThisMonth);

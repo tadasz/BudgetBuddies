@@ -33,6 +33,41 @@ block scripts
                 $.get( "/game/expense", { date:Date.now(), value:expense_input });
           }
       });
+      
+        $.get("/lastLogin", function(data) {
+            console.log("Data: " + data);
+            
+            if (data == "{}")
+            {
+                console.log("Set first day!");
+                $.get("/lastLogin", {date: Date.now()});
+            }
+            else
+            {
+                var json = JSON.parse(data);
+                //var lastLoginDate = new Date("2016-02-01");
+                var lastLoginDate = new Date(json.last_login);
+                
+                //compare last with current day
+                var diff = new Date(new Date() - lastLoginDate);
+                var days = Math.floor(diff/1000/60/60/24);
+                
+                var result = [];
+                for (i = 1; i < days; i++) 
+                {
+                    //Check if last login day was finished, otherwise finish it and check result
+                    
+                    
+                    lastLoginDate.setDate(lastLoginDate.getDate() + 1);
+                    var obj = {won: false, date: lastLoginDate, expenses: -1};
+                    result.push(obj);
+                }
+                if (result.length > 0)
+                    $.get("/updateDailyHistory", {result: JSON.stringify(result)});
+            }
+      });
+      
+      
     });
   script(src='/js/lib/activate-power-mode.js')
   script(src='/js/lib/phaser.min.js')
