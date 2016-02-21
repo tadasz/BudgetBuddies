@@ -6,7 +6,7 @@ block style
 block game_content
   .header
     h1 #{date_title}
-      input.finish_day_button(type="button", value="Finish day", onclick="reportEndOfDay()")      
+      input.finish_day_button(type="button", value="Finish day", onclick="reportEndOfDay()")
       span(id="budget_span").budget-span
           | Daily budget: -/-
 
@@ -57,7 +57,7 @@ block scripts
   script(src='/js/game/piggy.js')
   script(src='/js/game/hero.js')
   script(src='/js/game/main.js')
-  
+
   script.
     function reportEndOfDay() {
         console.log("reporting the end of the day...")
@@ -91,7 +91,7 @@ block scripts
     }
 
     function updateDailyBudget() {
-      $("#budget_span").html(" Daily budget: " + BB.expensesSum.toFixed(2) + " / 100.00");             
+      $("#budget_span").html(" Daily budget: " + BB.expensesSum.toFixed(2) + " / 100.00");
     }
 
     BB.expensesSum = parseFloat(2 + 3 + 15);
@@ -103,22 +103,24 @@ block scripts
       var date = new Date().toLocaleTimeString();;
 
       BB.expensesSum += parseFloat(value);
-      
+
 
       updateDailyBudget()
 
       console.log("expenses: " + BB.expensesSum)
-      if (BB.expensesSum > 50) {          
+      if (BB.expensesSum > 50) {
           setBackgroundAttention();
 
           $("#budget_span").css("color", "#D6E99A");
       }
       if (BB.expensesSum > 100) {
-          setBackgroundDanger();          
+          setBackgroundDanger();
           $("#budget_span").css("color", "#EE6630");
       }
 
-      $("<li class='list-group-item'><span class='date'>"+date+"</span> "+description+" <span class='cost'>"+value_str+"</span></li>").prependTo("#expense_list");
+      var new_item = $("<li style='display:none' class='list-group-item'><span class='date'>"+date+"</span> "+description+" <span class='cost'>"+value_str+"</span></li>");
+      new_item.prependTo("#expense_list");
+      new_item.fadeIn('slow');
 
     }
 
@@ -136,7 +138,7 @@ block scripts
                 POWERMODE.spawnParticles();
 
           }
-      });      
+      });
     });
 
   script.
@@ -151,7 +153,7 @@ block scripts
       BB.monsterController.addAllMonsters();
     });
 
-  
+
 
 
 
