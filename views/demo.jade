@@ -25,21 +25,27 @@ block content
           | &#x1F44A; ATTACK by logging your expense below:
 
   .input_container
-    input.previous_day_button(type="button", value="<<<", onclick="showPreviousDay()")
+    input.previous_day_button(type="button", value="<<<", onclick="goToPreviousDay()")
     input.main_input(type="text", id="expense_input")
-    input.next_day_button(type="button", value=">>>", onclick="showNextDay()")
+    input.next_day_button(type="button", value=">>>", onclick="goToNextDay()")
 
 block scripts
   //- script(src='/js/lib/jquery.inputmask.bundle.min.js')
 
-  script.
-    function showPreviousDay() {
-        console.log("previous day...")        
-    }
+  //- script.
+  //-   function showPreviousDay() {
+  //-       console.log("previous day...")        
+  //-   }
   
+  //- script.
+  //-   function showNextDay() {
+  //-       console.log("next day...")        
+  //-   }
+
   script.
-    function showNextDay() {
-        console.log("next day...")        
+    function reportEndOfDay() {
+        console.log("reporting the end of the day...")
+        $.get( "/game/summary/new", {date:Date.now(), balance: 20 });
     }
 
   script.

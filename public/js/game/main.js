@@ -9,6 +9,7 @@ var resize = function(e) {
         game.scale.width = window.innerWidth;
     }
     game.scale.refresh();
+    centerPlayerAndMonster();
 }
 window.onresize = resize;
 
@@ -22,17 +23,25 @@ function preload() {
 function create() {
     game.scale.pageAlignHorizontally = true;
     game.scale.pageAlignVertically = true;
-    resize();
+    
 
     createBackgrounds();
     createCharacter();
     createMonster();
+
+    resize();
+}
+
+var marginBetweenPlayerAndMonster = 10.0;
+function centerPlayerAndMonster() {
+    game.hero.x = game.scale.width / 2 - game.hero.width / 2 + marginBetweenPlayerAndMonster;
+    game.currentMonster.x = game.scale.width / 2 + game.currentMonster.width / 2 + marginBetweenPlayerAndMonster;
 }
 
 function createCharacter()
 {
     var hero = game.add.sprite(300, 350, 'hero');
-    hero.anchor.set(0, 1);
+    hero.anchor.set(0.5, 1);
     hero.animations.add('attack1', Phaser.Animation.generateFrameNames('attack01', 0, 29, '', 4), 22, true);
     hero.animations.add('attack2', Phaser.Animation.generateFrameNames('attack02', 0, 16, '', 4), 22, true);
     hero.animations.add('attack3', Phaser.Animation.generateFrameNames('attack03', 0, 20, '', 4), 22, true);
@@ -49,12 +58,14 @@ function createCharacter()
 function createMonster()
 {
     var monster = game.add.sprite(460, 350, 'monster');
-    monster.anchor.set(0, 1);
+    monster.anchor.set(0.5, 1);
     monster.animations.add('attack', ['monster_attack0000'], 22, true);
     monster.animations.add('defeat', ['monster_defeat0000'], 22, true);
     monster.animations.add('hit', ['monster_hit0000'], 22, true);
     monster.animations.add('idle', ['monster_idle0000'], 22, true);
     monster.animations.add('win', ['monster_win0000'], 22, true);
+
+    game.currentMonster = monster;
 }
 
 current_pose = 'pose1'
@@ -83,6 +94,16 @@ function attack()
     var attack = all_attacks[atk_index]
 
     game.hero.animations.play(attack, null, false);
+}
+
+function goToPreviousDay()
+{
+    console.log("previous day...");
+}
+
+function goToNextDay()
+{
+    console.log("next day...");   
 }
 
 function createBackgrounds()
