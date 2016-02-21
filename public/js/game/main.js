@@ -74,7 +74,7 @@ function finishDay() {
     if (playerWon) {
         BB.game.hero.animations.play('attack3', null, false);
         BB.game.currentMonster.animations.play('defeat', null, false);
-        
+
         BB.game.piggy.animations.play('cheer');
     } else {
         BB.game.hero.animations.play('hit', null, false);
@@ -113,7 +113,7 @@ function update() {
 }
 
 function render() {
-    BB.game.debug.spriteInfo(BB.game.currentMonster);
+    // BB.game.debug.spriteInfo(BB.game.currentMonster);
 }
 
 
