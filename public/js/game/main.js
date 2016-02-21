@@ -1,4 +1,4 @@
-BB.game = new Phaser.Game(1600, 400, Phaser.AUTO, 'game', { preload: preload, create: create, update: update });
+BB.game = new Phaser.Game(1600, 400, Phaser.AUTO, 'game', { preload: preload, create: create, update: update, render: render });
 var resize = function(e) {
     var aspectRatio = 1.5;
     if ((window.innerWidth / window.innerHeight) > aspectRatio) {
@@ -44,11 +44,12 @@ function create() {
     resize();
 }
 
-var marginBetweenPlayerAndMonster = 5.0;
+var marginBetweenPlayerAndMonster = -30;
 function centerPlayerAndMonster() {
     BB.game.hero.x = BB.game.scale.width / 2 - BB.game.hero.width - marginBetweenPlayerAndMonster;
     BB.game.currentMonster.x = BB.game.scale.width / 2 + BB.game.currentMonster.width + marginBetweenPlayerAndMonster;
     BB.game.big_button.x = BB.game.scale.width / 2;
+    BB.game.big_button.scale.x = 1.5;
 
     for (var i = 0; i < BB.game.small_buttons_before.length; i++) {
         var item = BB.game.small_buttons_before[i];
@@ -60,7 +61,7 @@ function centerPlayerAndMonster() {
     var lastEnemyPossitionX = BB.game.currentMonster.x;
     for (var i = 0; i < BB.game.small_buttons_after.length; i++) {
         var item = BB.game.small_buttons_after[i];
-        item.x = BB.game.scale.width / 2 + 200 + 100 * i;
+        item.x = BB.game.scale.width / 2 + 250 + 100 * i;
         var mini_monster =  BB.game.small_monsters_after[i];
         mini_monster.x = item.x - 10; //to center
 
@@ -77,7 +78,7 @@ function finishDay() {
     if (playerWon) {
         BB.game.hero.animations.play('attack3', null, false);
         BB.game.currentMonster.animations.play('defeat', null, false);
-        
+
         BB.game.piggy.animations.play('cheer');
     } else {
         BB.game.hero.animations.play('hit', null, false);
@@ -136,6 +137,11 @@ function setBackgroundDanger()
 }
 
 function update() {
+    BB.monsterController.update();
+}
+
+function render() {
+    // BB.game.debug.spriteInfo(BB.game.currentMonster);
 }
 
 
