@@ -32,7 +32,8 @@ block scripts
   script.
     function reportEndOfDay() {
         console.log("reporting the end of the day...")
-        $.get( "/game/summary/new", {date:Date.now(), balance: 20 });
+        //- $.get( "/game/summary/new", {date:Date.now(), balance: 20 });
+        finishDay();
     }
 
   script.
@@ -42,6 +43,7 @@ block scripts
                 var expense_input = $("#expense_input").prop("value");
                 $.get( "/game/expense", { date:Date.now(), value:expense_input });
                 BB.heroController.attack();
+                BB.monsterController.hitCurrent();
                 $("#expense_input").val("");
                 POWERMODE.spawnParticles();
           }

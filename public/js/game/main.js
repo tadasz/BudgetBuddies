@@ -18,13 +18,13 @@ function preload() {
     //monsters
     BB.heroController.preload();
     BB.monsterController.preload();
-    
+
 }
 
 function create() {
     BB.game.scale.pageAlignHorizontally = true;
     BB.game.scale.pageAlignVertically = true;
-    
+
 
     createBackgrounds();
     BB.heroController.create();
@@ -33,10 +33,25 @@ function create() {
     resize();
 }
 
-var marginBetweenPlayerAndMonster = 10.0;
+var marginBetweenPlayerAndMonster = 5.0;
 function centerPlayerAndMonster() {
-    BB.game.hero.x = BB.game.scale.width / 2 - BB.game.hero.width / 2 + marginBetweenPlayerAndMonster;
-    BB.game.currentMonster.x = BB.game.scale.width / 2 + BB.game.currentMonster.width / 2 + marginBetweenPlayerAndMonster;
+    BB.game.hero.x = BB.game.scale.width / 2 - BB.game.hero.width - marginBetweenPlayerAndMonster;
+    BB.game.currentMonster.x = BB.game.scale.width / 2 + BB.game.currentMonster.width + marginBetweenPlayerAndMonster;
+}
+
+function finishDay() {
+    var playerWon = Math.floor(Math.random() * 2) == 1
+    if (playerWon) {
+        BB.game.hero.animations.play('attack3', null, false);
+        BB.game.currentMonster.animations.play('defeat', null, false);
+    } else {
+        BB.game.hero.animations.play('hit', null, false);
+        BB.game.currentMonster.animations.play('attack', null, false);
+        BB.game.currentMonster.animations.currentAnim.onComplete.add(function () {
+            BB.game.currentMonster.animations.play('win');
+        });
+    }
+
 }
 
 function goToPreviousDay()
@@ -46,7 +61,7 @@ function goToPreviousDay()
 
 function goToNextDay()
 {
-    console.log("next day...");   
+    console.log("next day...");
 }
 
 function createBackgrounds()
