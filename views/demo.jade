@@ -124,6 +124,18 @@ block scripts
 
     }
 
+    function getParticlesColor() {
+      if (BB.expensesSum < 50) {
+        return 'rgba(65,177,5,255)' // green
+      }
+      else if (BB.expensesSum < 100) {
+        return 'rgba(186,172,0,255)' // yellow
+      }
+      else {
+        return 'rgba(255,0,0,255)' // red
+      }
+    }
+
   script.
     $(document).ready(function(){
       $("#expense_input").keypress(function(e) {
@@ -133,9 +145,11 @@ block scripts
                 //- $.get( "/game/expense", { date:Date.now(), value:expense_input });
                 BB.heroController.attack();
                 BB.monsterController.hitCurrent();
+                BB.piggyController.celebrate();
                 insertExpense($("#expense_input").val());
                 $("#expense_input").val("");
-                POWERMODE.spawnParticles();
+                var particlesColor = getParticlesColor();
+                POWERMODE.spawnParticles(particlesColor);
 
           }
       });

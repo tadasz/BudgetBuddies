@@ -140,12 +140,12 @@ return /******/ (function(modules) { // webpackBootstrap
         }
     };
     POWERMODE.colorful = false;
-    POWERMODE.spawnParticles = function() {
+    POWERMODE.spawnParticles = function(color) {
       // spawn particles
       var caret = getCaret();
       var numParticles = 50 + Math.round(Math.random() * 10);
       while (numParticles--) {
-          particles[particlePointer] = createParticle(caret.x, caret.y, caret.color);
+          particles[particlePointer] = createParticle(caret.x, caret.y, color);
           particlePointer = (particlePointer + 1) % 500;
       }
     }

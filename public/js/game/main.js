@@ -102,9 +102,10 @@ function finishDay() {
 
         BB.game.piggy.animations.play('cheer');
     } else {
-        BB.game.hero.animations.play('hit', null, false);
-        BB.game.currentMonster.animations.play('attack', null, false);
+        BB.game.hero.animations.play('hit');
+        BB.game.currentMonster.animations.play('attack');
         BB.game.currentMonster.animations.currentAnim.onComplete.add(function () {
+            BB.game.hero.animations.play('defeat');
             BB.game.currentMonster.animations.play('win');
             BB.game.piggy.animations.play('worry');
         });

@@ -11,8 +11,14 @@ BB.piggyController = {
 	    piggy.animations.add('cheer', Phaser.Animation.generateFrameNames('piggy_cheer', 0, 20, '', 4), 22, true);
 	    piggy.animations.add('idle', Phaser.Animation.generateFrameNames('piggy_idle', 0, 29, '', 4), 22, true);
 	    piggy.animations.add('worry', Phaser.Animation.generateFrameNames('piggy_worry', 0, 15, '', 4), 22, true);
-	    
+
 	    BB.game.piggy = piggy;
-	    BB.game.piggy.animations.play('idle');	    
+	    BB.game.piggy.animations.play('idle');
+	},
+
+	celebrate : function() {
+		BB.game.piggy.animations.play('cheer', null, false);
 	}
+
+
 }
