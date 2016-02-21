@@ -36,7 +36,7 @@ function create() {
 
     BB.monsterController.create();
     BB.heroController.create();
-    
+
     BB.monsterController.addSmallButtons()
 
     resize();
@@ -103,28 +103,4 @@ function createBackgrounds()
 function update() {
 }
 
-//*** number validation ***
 
-function parseEnteredItem(input) {
-    var withoutCurrency = input.replace("$", " ").replace("€", " ").replace("£", " ");
-    console.log(withoutCurrency);
-    var price = getItemPrice(withoutCurrency)
-    console.log("price: " + price)
-    console.log("name: " + withoutCurrency.replace(price, " ").replace(/\s{2,}/g, ' '))
-}
-
-function getItemPrice(input) {
-
-    var words = input.split(" ");
-    for (var i = 0; i < words.length; i++) {
-        var word = words[i];
-        if (isNumeric(word)) {
-            return word;
-        }
-    }
-    return 0.00;
-}
-
-function isNumeric(n) {
-  return !isNaN(parseFloat(n)) && isFinite(n);
-}

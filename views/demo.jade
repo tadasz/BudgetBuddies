@@ -55,13 +55,39 @@ block scripts
         //- $.get( "/game/summary/new", {date:Date.now(), balance: 20 });
         finishDay();
     }
+    //*** number validation ***
+
+    function parseEnteredItem(input) {
+        var withoutCurrency = input.replace("$", " ").replace("€", " ").replace("£", " ");
+        console.log(withoutCurrency);
+        var price = getItemPrice(withoutCurrency)
+        console.log("price: " + price)
+        console.log("name: " + withoutCurrency.replace(price, " ").replace(/\s{2,}/g, ' '))
+    }
+
+    function getItemPrice(input) {
+
+        var words = input.split(" ");
+        for (var i = 0; i < words.length; i++) {
+            var word = words[i];
+            if (isNumeric(word)) {
+                return word;
+            }
+        }
+        return 0.00;
+    }
+
+    function isNumeric(n) {
+      return !isNaN(parseFloat(n)) && isFinite(n);
+    }
 
     function insertExpense(str) {
-      var description = str;
-      var value = "€10.00";
+      var value = getItemPrice(str);
+      var description = str.replace(value, "");
+      var value_str = "€" + parseFloat(value).toFixed(2);
       var date = new Date().toLocaleTimeString();;
 
-      $("<li class='list-group-item'><span class='date'>"+date+"</span> "+description+" <span class='cost'>"+value+"</span></li>").prependTo("#expense_list");
+      $("<li class='list-group-item'><span class='date'>"+date+"</span> "+description+" <span class='cost'>"+value_str+"</span></li>").prependTo("#expense_list");
 
     }
 
@@ -71,7 +97,7 @@ block scripts
           if(e.which == 13) {
                 var expense_input = $("#expense_input").prop("value");
                 parseEnteredItem(expense_input);
-                $.get( "/game/expense", { date:Date.now(), value:expense_input });
+                //- $.get( "/game/expense", { date:Date.now(), value:expense_input });
                 BB.heroController.attack();
                 BB.monsterController.hitCurrent();
                 insertExpense($("#expense_input").val());
