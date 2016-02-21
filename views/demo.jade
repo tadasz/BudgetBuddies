@@ -26,7 +26,7 @@ block game_content
 
   .input_container
     //- input.previous_day_button(type="button", value="<<<", onclick="goToPreviousDay()")
-    input.main_input(type="text", id="expense_input")
+    input.main_input(type="text", id="expense_input", placeholder="e.g., Groceries $13.57")
     //- input.next_day_button(type="button", value=">>>", onclick="goToNextDay()")
     ul.game_expense_list.list-group.text-center(id="expense_list")
       li.list-group-item
@@ -147,6 +147,7 @@ block scripts
                 BB.monsterController.hitCurrent();
                 BB.piggyController.celebrate();
                 insertExpense($("#expense_input").val());
+                $("#expense_input").prop("placeholder", "");
                 $("#expense_input").val("");
                 var particlesColor = getParticlesColor();
                 POWERMODE.spawnParticles(particlesColor);
