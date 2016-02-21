@@ -14,14 +14,14 @@ var resize = function(e) {
 window.onresize = resize;
 
 function preload() {
-    BB.game.load.image('bg_tile01', '/assets/bg_tile01.png');
-    BB.game.load.image('bg_tile02', '/assets/bg_tile02.png');
-    BB.game.load.image('bg_tile03', '/assets/bg_tile03.png');
+    BB.game.load.image('bg_tile01', '/assets/bg_tile01.jpg');
+    BB.game.load.image('bg_tile02', '/assets/bg_tile02.jpg');
+    BB.game.load.image('bg_tile03', '/assets/bg_tile03.jpg');
+    BB.game.load.atlasJSONHash('rain', '/assets/rain.png', '/assets/rain.json');
     //monsters
     BB.heroController.preload();
     BB.monsterController.preload();
     BB.piggyController.preload();
-
 
 }
 
@@ -30,6 +30,7 @@ function create() {
     BB.game.scale.pageAlignVertically = true;
 
     createBackgrounds();
+    createRain();
 
     var big_button = BB.game.add.sprite(460, 370, 'level_buttons_big');
     big_button.anchor.set(0.5, 1);
@@ -41,7 +42,27 @@ function create() {
     BB.monsterController.addSmallMonsters()
     BB.piggyController.create();
 
+
+
     resize();
+}
+
+function createRain()
+{
+    var rain_width = 400
+    var rain_tiles = 4
+    var rain_group = BB.game.add.group();
+
+    BB.game.rain = rain_group;
+
+    for (var i=0; i < rain_tiles; i++)
+    {
+        var rain_piece = rain_group.create(i*rain_width, 0, 'rain');
+        rain_piece.animations.add('pour', Phaser.Animation.generateFrameNames('raining_', 0, 4), 22, true);
+        rain_piece.animations.play('pour')
+    }
+
+    rain_group.alpha = 0;
 }
 
 var marginBetweenPlayerAndMonster = -30;
@@ -77,15 +98,20 @@ function finishDay() {
 
     if (playerWon) {
         BB.game.hero.animations.play('attack3', null, false);
-        BB.game.currentMonster.animations.play('defeat', null, false);
+        BB.game.currentMonster.animations.play('defeat', null, false).onComplete.add(function() {
+                showInspector();
+            });
 
         BB.game.piggy.animations.play('cheer');
     } else {
-        BB.game.hero.animations.play('hit', null, false);
-        BB.game.currentMonster.animations.play('attack', null, false);
+
+        BB.game.hero.animations.play('hit');
+        BB.game.currentMonster.animations.play('attack');
+        BB.game.piggy.animations.play('worry');
         BB.game.currentMonster.animations.currentAnim.onComplete.add(function () {
+            BB.game.hero.animations.play('defeat');
             BB.game.currentMonster.animations.play('win');
-            BB.game.piggy.animations.play('worry');
+            showInspector();
         });
     }
 }
@@ -107,7 +133,7 @@ function createBackgrounds()
     var bg_group03 = BB.game.add.group();
     var bg_group02 = BB.game.add.group();
     var bg_group01 = BB.game.add.group();
-    
+
     BB.game.bg_group01 = bg_group01;
     BB.game.bg_group02 = bg_group02;
     BB.game.bg_group03 = bg_group03;
@@ -121,19 +147,20 @@ function createBackgrounds()
     }
 }
 
-function setBackgroundAttention() 
+function setBackgroundAttention()
 {
     console.log("setting BackgroundAttention");
 
     BB.game.add.tween(BB.game.bg_group01).to( { alpha: 0 }, 2000, Phaser.Easing.Linear.None, true, 0, 0, false);
 
-    
+
 }
 
-function setBackgroundDanger() 
+function setBackgroundDanger()
 {
     console.log("setting BackgroundDanger");
     BB.game.add.tween(BB.game.bg_group02).to( { alpha: 0 }, 2000, Phaser.Easing.Linear.None, true, 0, 0, false);
+    BB.game.add.tween(BB.game.rain).to( { alpha: 1 }, 2000, Phaser.Easing.Linear.None, true, 0, 0, false);
 }
 
 function update() {

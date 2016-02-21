@@ -26,7 +26,7 @@ block game_content
 
   .input_container
     //- input.previous_day_button(type="button", value="<<<", onclick="goToPreviousDay()")
-    input.main_input(type="text", id="expense_input")
+    input.main_input(type="text", id="expense_input", placeholder="e.g., Groceries $13.57")
     //- input.next_day_button(type="button", value=">>>", onclick="goToNextDay()")
     ul.game_expense_list.list-group.text-center(id="expense_list")
       li.list-group-item
@@ -99,7 +99,7 @@ block scripts
       var withoutCurrency = input.replace("$", " ").replace("€", " ").replace("£", " ");
       var value = getItemPrice(withoutCurrency);
       var description = withoutCurrency.replace(value, " ").replace(/\s{2,}/g, ' ')
-      var value_str = "€" + parseFloat(value).toFixed(2);
+      var value_str = "$" + parseFloat(value).toFixed(2);
       var date = new Date().toLocaleTimeString();;
 
       BB.expensesSum += parseFloat(value);
@@ -124,6 +124,18 @@ block scripts
 
     }
 
+    function getParticlesColor() {
+      if (BB.expensesSum < 50) {
+        return 'rgba(65,177,5,255)' // green
+      }
+      else if (BB.expensesSum < 100) {
+        return 'rgba(186,172,0,255)' // yellow
+      }
+      else {
+        return 'rgba(255,0,0,255)' // red
+      }
+    }
+
   script.
     $(document).ready(function(){
       $("#expense_input").keypress(function(e) {
@@ -133,9 +145,12 @@ block scripts
                 //- $.get( "/game/expense", { date:Date.now(), value:expense_input });
                 BB.heroController.attack();
                 BB.monsterController.hitCurrent();
+                BB.piggyController.celebrate();
                 insertExpense($("#expense_input").val());
+                $("#expense_input").prop("placeholder", "");
                 $("#expense_input").val("");
-                POWERMODE.spawnParticles();
+                var particlesColor = getParticlesColor();
+                POWERMODE.spawnParticles(particlesColor);
 
           }
       });

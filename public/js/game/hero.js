@@ -8,14 +8,15 @@ BB.heroController = {
     {
         var hero = BB.game.add.sprite(100, 350, 'hero');
         hero.anchor.set(0, 1);
-        hero.animations.add('attack1', Phaser.Animation.generateFrameNames('attack01', 0, 29, '', 4), 22, true);
-        hero.animations.add('attack2', Phaser.Animation.generateFrameNames('attack02', 0, 16, '', 4), 22, true);
-        hero.animations.add('attack3', Phaser.Animation.generateFrameNames('attack03', 0, 20, '', 4), 22, true);
-        hero.animations.add('hit',     Phaser.Animation.generateFrameNames('hit', 0, 21, '', 4),      22, true);
+        hero.animations.add('attack1', Phaser.Animation.generateFrameNames('attack01', 0, 29, '', 4), 22, false);
+        hero.animations.add('attack2', Phaser.Animation.generateFrameNames('attack02', 0, 16, '', 4), 22, false);
+        hero.animations.add('attack3', Phaser.Animation.generateFrameNames('attack03', 0, 20, '', 4), 22, false);
+        hero.animations.add('hit',     Phaser.Animation.generateFrameNames('hit', 0, 21, '', 4),      22, false);
         hero.animations.add('idle',    Phaser.Animation.generateFrameNames('idle', 0, 79, '', 4),     22, true);
-        hero.animations.add('pose1', ['pose010000'],     22, true);
-        hero.animations.add('pose2', ['pose020000'],     22, true);
-        hero.animations.add('pose3', ['pose030000'],     22, true);
+        hero.animations.add('defeat',    Phaser.Animation.generateFrameNames('defeat', 0, 11, '', 4), 22, false);
+        hero.animations.add('pose1', ['pose010000'],     22, false);
+        hero.animations.add('pose2', ['pose020000'],     22, false);
+        hero.animations.add('pose3', ['pose030000'],     22, false);
         hero.animations.play('idle');
 
         BB.game.hero = hero;
@@ -47,6 +48,10 @@ BB.heroController = {
         var attack = all_attacks[atk_index]
 
         BB.game.hero.animations.play(attack, null, false);
+        BB.game.hero.animations.currentAnim.onComplete.add(function () {
+            BB.game.hero.animations.play('idle');
+
+        });
     }
 
 
