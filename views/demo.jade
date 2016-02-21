@@ -28,8 +28,13 @@ block game_content
   .header
     h1 #{date_title}
       input.finish_day_button(type="button", value="Finish day", onclick="reportEndOfDay()")
-      span(id="budget_span").budget-span
+      //- span(id="budget_span").budget-span
           | Daily budget: -/-
+
+  .progress
+    .progress-bar(id="budget_progress", class="progress-bar-success", role="progressbar", aria-valuenow="70", aria-valuemin="0", aria-valuemax="100", style="width:20%")
+      .myLabel(id="budget_span") 
+        | Budget 
 
   //- h2 Debug Options
   //- p
@@ -118,8 +123,6 @@ block scripts
         var withoutCurrency = input.replace("$", " ").replace("$", " ").replace("£", " ");
         console.log(withoutCurrency);
         var price = getItemPrice(withoutCurrency)
-        console.log("price: " + price)
-        console.log("name: " + withoutCurrency.replace(price, " ").replace(/\s{2,}/g, ' '))
     }
 
     function getItemPrice(input) {
@@ -140,6 +143,10 @@ block scripts
 
     function updateDailyBudget() {
       $("#budget_span").html(" Daily budget: " + BB.expensesSum.toFixed(2) + " / 100.00");
+
+      var percents = (BB.expensesSum < 100 ? BB.expensesSum.toFixed(0) : "100") + "%"      
+      $("#budget_progress").css('width', percents);
+
     }
 
     BB.expensesSum = parseFloat(2 + 3 + 15);
@@ -158,12 +165,11 @@ block scripts
       console.log("expenses: " + BB.expensesSum)
       if (BB.expensesSum > 50) {
           setBackgroundAttention();
-
-          $("#budget_span").css("color", "#D6E99A");
+          $("#budget_progress").prop("class", "progress-bar progress-bar-warning");
       }
       if (BB.expensesSum > 100) {
-          setBackgroundDanger();
-          $("#budget_span").css("color", "#EE6630");
+          setBackgroundDanger();          
+          $("#budget_progress").prop("class", "progress-bar progress-bar-danger");
       }
 
       var new_item = $("<li style='display:none' class='list-group-item'><span class='date'>"+date+"</span> "+description+" <span class='cost'>"+value_str+"</span></li>");
