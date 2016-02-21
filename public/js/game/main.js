@@ -14,7 +14,9 @@ var resize = function(e) {
 window.onresize = resize;
 
 function preload() {
-    BB.game.load.image('bg_tile', '/assets/bg_tile.png');
+    BB.game.load.image('bg_tile01', '/assets/bg_tile01.png');
+    BB.game.load.image('bg_tile02', '/assets/bg_tile02.png');
+    BB.game.load.image('bg_tile03', '/assets/bg_tile03.png');
     //monsters
     BB.heroController.preload();
     BB.monsterController.preload();
@@ -70,6 +72,8 @@ function centerPlayerAndMonster() {
 
 function finishDay() {
     var playerWon = Math.floor(Math.random() * 2) == 1
+    playerWon = BB.expensesSum < 100 ? true : false;
+
     if (playerWon) {
         BB.game.hero.animations.play('attack3', null, false);
         BB.game.currentMonster.animations.play('defeat', null, false);
@@ -99,13 +103,36 @@ function createBackgrounds()
 {
     var bg_tile_width = 400
     var bg_tiles = 4
-    var bg_group = BB.game.add.group();
+    var bg_group03 = BB.game.add.group();
+    var bg_group02 = BB.game.add.group();
+    var bg_group01 = BB.game.add.group();
+    
+    BB.game.bg_group01 = bg_group01;
+    BB.game.bg_group02 = bg_group02;
+    BB.game.bg_group03 = bg_group03;
 
     for (var i=0; i < bg_tiles; i++)
     {
-        var bg_piece = bg_group.create(i*bg_tile_width, 0, 'bg_tile');
+        var bg_piece3 = bg_group03.create(i*bg_tile_width, 0, 'bg_tile03');
+        var bg_piece2 = bg_group02.create(i*bg_tile_width, 0, 'bg_tile02');
+        var bg_piece1 = bg_group01.create(i*bg_tile_width, 0, 'bg_tile01');
         // game.add.sprite(i*bg_tile_width, 0, 'bg_tile')
     }
+}
+
+function setBackgroundAttention() 
+{
+    console.log("setting BackgroundAttention");
+
+    BB.game.add.tween(BB.game.bg_group01).to( { alpha: 0 }, 2000, Phaser.Easing.Linear.None, true, 0, 0, false);
+
+    
+}
+
+function setBackgroundDanger() 
+{
+    console.log("setting BackgroundDanger");
+    BB.game.add.tween(BB.game.bg_group02).to( { alpha: 0 }, 2000, Phaser.Easing.Linear.None, true, 0, 0, false);
 }
 
 function update() {

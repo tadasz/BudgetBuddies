@@ -63,6 +63,11 @@
   text-align: center;
 }
 
+.budget-span {
+  text-align: left;
+  color: #81963D
+}
+
 h1 {
   margin-left: 20px !important;
   margin-right: 20px !important;
